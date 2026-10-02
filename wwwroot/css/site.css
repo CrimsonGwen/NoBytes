@@ -1,0 +1,40 @@
+:root {
+    --primary-color: #F3752B;
+    --secundary-color: #A20021;
+    --bg-color: #F79D5C;
+    --text-color: #000000;
+    --accent-color: #F52F57;
+    --main-font: 'Silkscreen', sans-serif;
+    --heading-font: 'Silkscreen', cursive;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    font-family: 'Silkscreen', sans-serif !important;
+    background-color: #F79D5C !important;
+    color: #000000 !important;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, .display-4 {
+    font-family: 'Silkscreen', cursive !important;
+    color: #F3752B !important;
+}
+
+.silkscreen-bold {
+    font-family: 'Silkscreen', cursive !important;
+    font-weight: bold !important;
+    color: #F3752B !important;
+}
