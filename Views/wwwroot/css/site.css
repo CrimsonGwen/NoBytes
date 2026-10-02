@@ -21,16 +21,16 @@ html {
 }
 
 body {
-    font-family: 'Silkscreen', sans-serif !important;
-    background-color: #F79D5C !important;
-    color: #000000 !important;
+    font-family: var(--main-font);
+    background-color: var(--bg-color);
+    color: var(--text-color);
     margin: 0;
     padding: 0;
 }
 
 h1, h2, h3, h4, h5, h6, .display-4 {
-    font-family: 'Silkscreen', cursive !important;
-    color: #F3752B !important;
+    font-family: var(--heading-font);
+    color: var(--text-color);
 }
 
 .silkscreen-bold {
