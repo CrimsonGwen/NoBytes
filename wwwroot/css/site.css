@@ -24,6 +24,9 @@ body {
     font-family: var(--main-font);
     background-color: var(--bg-color);
     color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     margin: 0;
     padding: 0;
 }
@@ -37,4 +40,8 @@ h1, h2, h3, h4, h5, h6, .display-4 {
     font-family: 'Silkscreen', cursive !important;
     font-weight: bold !important;
     color: #F3752B !important;
+}
+
+.navbar {
+    background-color: var(--secundary-color);
 }

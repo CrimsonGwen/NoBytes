@@ -23,11 +23,12 @@ a {
   border-color: #1861ac;
 }
 
-.border-top {
-  border-top: 1px solid #e5e5e5;
+.custom-border-top {
+    border-top: 2px solid #F52F57;
 }
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+
+.custom-border-bottom {
+    border-bottom: 2px solid #F52F57;
 }
 
 .box-shadow {

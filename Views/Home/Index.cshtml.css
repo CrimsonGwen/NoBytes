@@ -1,0 +1,41 @@
+/* CSS for Index view */
+.hero {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    height: 100vh;
+    background-image: url("/Gemini_Generated_Image_ohctxyohctxyohct.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.text-background {
+    color: #fff; 
+    background: rgba(0, 0, 0, 0.4); 
+    padding: 20px 40px; 
+    border-radius: 8px;
+}
+
+.home-btn-group {
+    display: flex;
+    justify-content: center;
+    padding: 20px 40px;
+    border-radius: 8px;
+    gap: 20px
+}
+
+.home-btn {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+}
