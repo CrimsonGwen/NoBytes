@@ -31,7 +31,8 @@
     gap: 20px
 }
 
-.home-btn {
+.home-btn, a {
+    all: unset;
     color: #fff;
     background: rgba(0, 0, 0, 0.4);
     padding: 10px 20px;
@@ -39,3 +40,23 @@
     text-decoration: none;
     display: inline-block;
 }
+
+    a.home-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background-color: rgba(0, 0, 0, 0.6) !important;
+        color: #ffffff !important;
+        padding: 10px 24px !important;
+        border-radius: 8px !important;
+        text-decoration: none !important;
+        font-weight: bold !important;
+        text-transform: uppercase !important;
+    }
+
+        a.home-btn:hover,
+        a.home-btn:focus {
+            background-color: rgba(0, 0, 0, 0.8) !important;
+            color: #ffffff !important;
+            text-decoration: none !important;
+        }
