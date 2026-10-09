@@ -16,5 +16,14 @@ namespace Restaurant.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAccount(CreateAccountViewModel vm)
+        {
+    
+
+            return View(vm);
+        }
     }
 }
