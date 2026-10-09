@@ -9,8 +9,40 @@
 <div>
     <h1>Maak een account aan</h1>
     <form asp-controller="Account" asp-action="CreateAccount" method="post">
-        <div class="form-actions">
-            <input asp-for="Voornaam"/>
+        <div class="form-actions create-menu">
+            <div>
+                <label>Vul hier je voornaam in:</label>
+                <input asp-for="Voornaam" />
+            </div>
+            <div>
+                <label>Vul hier je achternaam in:</label>
+                <input asp-for="Achternaam"/>
+            </div>
+            <div>
+                <label>Vul hier je adres in:</label>
+                <input asp-for="Adres"/>
+            </div>
+            <div>
+                <label>Vul hier je huisnummer in:</label>
+                <input asp-for="Huisnummer"/>
+            </div>
+            <div>
+                <label>Vul hier je postcode in:</label>
+                <input asp-for="Postcode"/>
+            </div>
+            <div>
+                <label>Vul hier je gemeente in:</label>
+                <input asp-for="Gemeente"/>
+            </div>
+            <div>
+                <label>Vul hier je email in:</label>
+                <input asp-for="Email"/>
+            </div>
+            <div>
+                <label>Vul hier je wachtwoord in:</label>
+                <input asp-for="Wachtwoord"/>
+            </div>
+            <button type="button">Create</button>
         </div>
     </form>
 </div>
