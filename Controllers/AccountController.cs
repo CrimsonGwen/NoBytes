@@ -19,7 +19,7 @@ namespace Restaurant.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var vm = await GetCreateAccountViewModelAsync();
+            var vm = await GetDataAsync();
             return View(vm);
         }
 
@@ -46,25 +46,7 @@ namespace Restaurant.Controllers
             return View("Confirmation", user);
         }
 
-        //[HttpGet("Confirmation/{id}")]
-        //public async Task<IActionResult> Confirmation(string id)
-        //{
-        //    if (string.IsNullOrEmpty(id))
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var user = await _context.CustomUserRepository.GetByIdAsync(id);
-
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View("Confirmation", user);
-        //}
-
-        private async Task<CreateAccountViewModel> GetCreateAccountViewModelAsync()
+        private async Task<CreateAccountViewModel> GetDataAsync()
         {
             var landen = await _context.LandenRepository.GetAllAsync();
 

@@ -6,7 +6,7 @@ namespace Restaurant.Configuration
     {
         public MappingProfile()
         {
-            CreateMap<CreateAccountViewModel, CustomUser>().ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<CreateAccountViewModel, CustomUser>().;
         }
     }
 }
