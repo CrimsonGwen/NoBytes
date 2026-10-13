@@ -42,7 +42,15 @@
                 <label>Vul hier je wachtwoord in:</label>
                 <input asp-for="Wachtwoord"/>
             </div>
-            <button type="button">Create</button>
+            <div class="form-group">
+                <label asp-for="LandId" class="control-label"></label>
+                <select asp-for="LandId" asp-items="Model.Landen" class="form-control">
+                    <option value="">-- Selecteer Land --</option>
+                </select>
+                <span asp-validation-for="LandId" class="text-danger"></span>
+            </div>
+
+            <button type="submit">Create</button>
         </div>
     </form>
 </div>
