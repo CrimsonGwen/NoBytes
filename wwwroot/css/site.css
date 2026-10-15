@@ -22,7 +22,7 @@ html {
 
 body {
     font-family: var(--main-font);
-    background-color: var(--bg-color);
+    background: linear-gradient(25deg, var(--bg-color), var(--primary-color));
     color: var(--text-color);
     display: flex;
     flex-direction: column;
