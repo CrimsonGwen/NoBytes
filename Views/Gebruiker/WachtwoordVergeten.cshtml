@@ -1,0 +1,53 @@
+@model Restaurant.ViewModels.WachtwoordVergetenViewModel
+
+@{
+    ViewData["Title"] = "Wachtwoord vergeten";
+}
+
+<h2>Wachtwoord vergeten</h2>
+
+@if (TempData["ResetMelding"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["ResetMelding"]
+    </div>
+}
+
+@if (TempData["ResetSucces"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["ResetSucces"]
+    </div>
+}
+
+@if (TempData["ResetFout"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ResetFout"]
+    </div>
+}
+
+<p>Vul je e-mailadres in om je wachtwoord opnieuw in te stellen.</p>
+
+<form asp-action="WachtwoordVergeten" method="post">
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">E-mailadres</label>
+
+        <input asp-for="Email"
+               class="form-control"
+               placeholder="naam@voorbeeld.be" />
+
+        <span asp-validation-for="Email"
+              class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Resetlink aanvragen
+    </button>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
