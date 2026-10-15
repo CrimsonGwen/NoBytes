@@ -47,3 +47,13 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
+
+.nobytes-logo{
+    height: 8vh;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid{
+    max-height: 50px
+}
