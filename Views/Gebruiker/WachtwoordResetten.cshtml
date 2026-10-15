@@ -1,0 +1,46 @@
+@model Restaurant.ViewModels.WachtwoordResettenViewModel
+
+@{
+    ViewData["Title"] = "Wachtwoord resetten";
+}
+
+<h2>Wachtwoord resetten</h2>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="WachtwoordResetten" method="post">
+
+    <input asp-for="Email" type="hidden" />
+    <input asp-for="Token" type="hidden" />
+
+    <div class="mb-3">
+        <label asp-for="NieuwWachtwoord" class="form-label">
+            Nieuw wachtwoord
+        </label>
+
+        <input asp-for="NieuwWachtwoord" class="form-control" />
+
+        <span asp-validation-for="NieuwWachtwoord"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="BevestigWachtwoord" class="form-label">
+            Bevestig nieuw wachtwoord
+        </label>
+
+        <input asp-for="BevestigWachtwoord" class="form-control" />
+
+        <span asp-validation-for="BevestigWachtwoord"
+              class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Wachtwoord wijzigen
+    </button>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

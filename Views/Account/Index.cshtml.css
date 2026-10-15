@@ -1,0 +1,11 @@
+/* CSS for Index view */
+.create-menu {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 20px 40px;
+    border-radius: 8px;
+    gap: 20px
+}
