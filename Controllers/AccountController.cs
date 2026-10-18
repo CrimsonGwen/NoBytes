@@ -6,12 +6,16 @@ namespace Restaurant.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger<AccountController> _logger;
+        private readonly UserManager<CustomUser> _userManager;
+        private readonly SignInManager<CustomUser> _signInManager;
         private readonly IUnitOfWork _context;
         private readonly IMapper _mapper;
 
-        public AccountController(ILogger<AccountController> logger, IUnitOfWork context, IMapper mapper)
+        public AccountController(ILogger<AccountController> logger,UserManager<CustomUser> userManager, SignInManager<CustomUser> signInManager , IUnitOfWork context, IMapper mapper)
         {
             _logger = logger;
+            _userManager = userManager;
+            _signInManager = signInManager;
             _context = context;
             _mapper = mapper;
         }
@@ -44,6 +48,25 @@ namespace Restaurant.Controllers
 
             user.Land = await _context.LandenRepository.GetByIdAsync(vm.LandId);
             user.Actief = true;
+
+            var result = await _userManager.CreateAsync(user, vm.Wachtwoord);
+
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "klant");
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                //return RedirectToAction("Create", "Reservatie");
+            }
+            else
+            {
+                vm.Landen = landen.Select(l => new SelectListItem
+                {
+                    Value = l.Id.ToString(),
+                    Text = l.Naam
+                });
+
+                return View("Index", vm);
+            }
 
             await _context.CustomUserRepository.AddAsync(user);
             await _context.SaveChangesAsync();
