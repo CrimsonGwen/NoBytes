@@ -27,18 +27,23 @@ namespace Restaurant.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAccount(CreateAccountViewModel vm)
         {
+            var landen = await _context.LandenRepository.GetAllAsync();
+
             if (!ModelState.IsValid)
             {
-                var landen = await _context.LandenRepository.GetAllAsync();
                 vm.Landen = landen.Select(l => new SelectListItem
                 {
                     Value = l.Id.ToString(),
                     Text = l.Naam
                 });
+
                 return View("Index", vm);
             }
 
             var user = _mapper.Map<CustomUser>(vm);
+
+            user.Land = await _context.LandenRepository.GetByIdAsync(vm.LandId);
+            user.Actief = true;
 
             await _context.CustomUserRepository.AddAsync(user);
             await _context.SaveChangesAsync();

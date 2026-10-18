@@ -9,3 +9,10 @@
     border-radius: 8px;
     gap: 20px
 }
+
+.label{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+}

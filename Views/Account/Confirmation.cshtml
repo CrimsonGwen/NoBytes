@@ -6,18 +6,21 @@
     ViewData["Title"] = "Account Confirmation Page";
 }
 
-<h1>Zijn deze gegevens correct?</h1>
-<div>
-    <p>
-        Naam:@Model.Voornaam @Model.Achternaam
-    </p>
-    <p>
-        Adres:@Model.Adres @Model.Gemeente @Model.Postcode
-    </p>
-    <p>
-        Email:@Model.Email
-    </p>
-    <p>
-        Land:@Model.Land
-    </p>
+<div class="confirmation-window">
+    <h1>Zijn deze gegevens correct?</h1>
+    <div>
+        <p>
+            Naam:@Model.Voornaam @Model.Achternaam
+        </p>
+        <p>
+            Adres:@Model.Adres @Model.Gemeente @Model.Postcode
+        </p>
+        <p>
+            Email:@Model.Email
+        </p>
+        <p>
+            Land:@Model.Land.Naam
+        </p>
+    </div>
 </div>
+

@@ -11,39 +11,39 @@
     <form asp-controller="Account" asp-action="CreateAccount" method="post">
         <div class="form-actions create-menu">
             <div class="label">
-                <label>Vul hier je voornaam in:</label>
+                <label>Voornaam</label>
                 <input asp-for="Voornaam" />
             </div>
             <div class="label"> 
-                <label>Vul hier je achternaam in:</label>
+                <label>Achternaam</label>
                 <input asp-for="Achternaam"/>
             </div>
             <div class="label">
-                <label>Vul hier je adres in:</label>
+                <label>Adres</label>
                 <input asp-for="Adres"/>
             </div>
             <div class="label">
-                <label>Vul hier je huisnummer in:</label>
+                <label>Huisnummer</label>
                 <input asp-for="Huisnummer"/>
             </div>
             <div class="label">
-                <label>Vul hier je postcode in:</label>
+                <label>Postcode</label>
                 <input asp-for="Postcode"/>
             </div>
             <div class="label">
-                <label>Vul hier je gemeente in:</label>
+                <label>Gemeente</label>
                 <input asp-for="Gemeente"/>
             </div>
             <div class="label">
-                <label>Vul hier je email in:</label>
+                <label>Email</label>
                 <input asp-for="Email"/>
             </div>
             <div class="label">
-                <label>Vul hier je wachtwoord in:</label>
+                <label>Eigen wachtwoord</label>
                 <input asp-for="Wachtwoord"/>
             </div>
             <div class="form-group">
-                <label asp-for="LandId" class="control-label"></label>
+                <label asp-for="LandId" class="control-label">Land</label>
                 <select asp-for="LandId" asp-items="Model.Landen" class="form-control">
                     <option value="">-- Selecteer Land --</option>
                 </select>
