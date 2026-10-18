@@ -10,37 +10,47 @@
     <h1>Maak een account aan</h1>
     <form asp-controller="Account" asp-action="CreateAccount" method="post">
         <div class="form-actions create-menu">
-            <div class="label">
-                <label>Voornaam</label>
-                <input asp-for="Voornaam" />
+            <div class="gegevens">
+                <div class="label">
+                    <label>Voornaam</label>
+                    <input asp-for="Voornaam" />
+                </div>
+                <div class="label"> 
+                    <label>Achternaam</label>
+                    <input asp-for="Achternaam"/>
+                </div>
+                <div class="label">
+                    <label>Email</label>
+                    <input asp-for="Email" />
+                </div>
             </div>
-            <div class="label"> 
-                <label>Achternaam</label>
-                <input asp-for="Achternaam"/>
+            <div class="adres">
+                <div class="label">
+                    <label>Adres</label>
+                    <input asp-for="Adres"/>
+                </div>
+                <div class="label">
+                    <label>Huisnummer</label>
+                    <input asp-for="Huisnummer"/>
+                </div>
+                <div class="label">
+                    <label>Postcode</label>
+                    <input asp-for="Postcode"/>
+                </div>
+                <div class="label">
+                    <label>Gemeente</label>
+                    <input asp-for="Gemeente"/>
+                </div>
             </div>
-            <div class="label">
-                <label>Adres</label>
-                <input asp-for="Adres"/>
-            </div>
-            <div class="label">
-                <label>Huisnummer</label>
-                <input asp-for="Huisnummer"/>
-            </div>
-            <div class="label">
-                <label>Postcode</label>
-                <input asp-for="Postcode"/>
-            </div>
-            <div class="label">
-                <label>Gemeente</label>
-                <input asp-for="Gemeente"/>
-            </div>
-            <div class="label">
-                <label>Email</label>
-                <input asp-for="Email"/>
-            </div>
-            <div class="label">
-                <label>Eigen wachtwoord</label>
-                <input asp-for="Wachtwoord"/>
+            <div class="Wachtwoord">
+                <div class="label">
+                    <label>Eigen wachtwoord</label>
+                    <input asp-for="Wachtwoord"/>
+                </div>
+                <div class="label">
+                    <label>Gegeneerd wacthwoord</label>
+                    
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="LandId" class="control-label">Land</label>
