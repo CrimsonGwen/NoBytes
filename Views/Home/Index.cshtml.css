@@ -1,6 +1,7 @@
 /* CSS for Index view */
 .hero-container {
     display: flex;
+    flex: 0 0 auto;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -8,7 +9,7 @@
 }
 
 .hero-image{
-    height: 50vh;
+    height: 30vh;
 }
 
 .text-background {
