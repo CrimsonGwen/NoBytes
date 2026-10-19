@@ -59,6 +59,11 @@ namespace Restaurant.Controllers
             }
             else
             {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
                 vm.Landen = landen.Select(l => new SelectListItem
                 {
                     Value = l.Id.ToString(),

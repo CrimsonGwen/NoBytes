@@ -20,14 +20,18 @@ html {
     }
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: var(--main-font);
     background: linear-gradient(25deg, var(--bg-color), var(--primary-color));
     color: var(--text-color);
     display: flex;
     flex-direction: column;
-    margin: 0;
-    padding: 0;
 }
 
 h1, h2, h3, h4, h5, h6, .display-4 {
