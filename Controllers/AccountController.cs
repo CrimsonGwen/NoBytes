@@ -48,6 +48,7 @@ namespace Restaurant.Controllers
 
             user.Land = await _context.LandenRepository.GetByIdAsync(vm.LandId);
             user.Actief = true;
+            user.UserName = vm.Gebruikersnaam;
 
             var result = await _userManager.CreateAsync(user, vm.Wachtwoord);
 
