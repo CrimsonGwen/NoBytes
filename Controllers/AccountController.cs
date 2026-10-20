@@ -50,8 +50,7 @@ namespace Restaurant.Controllers
             user.Actief = true;
             user.UserName = vm.Gebruikersnaam;
 
-            if()
-                var result = await _userManager.CreateAsync(user, vm.Wachtwoord);
+            var result = await _userManager.CreateAsync(user, vm.Wachtwoord);
 
             if (result.Succeeded)
             {
