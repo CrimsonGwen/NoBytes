@@ -54,7 +54,7 @@ namespace Restaurant.Controllers
 
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "klant");
+                await _userManager.AddToRoleAsync(user, "Klant");
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 //return RedirectToAction("Create", "Reservatie");
             }
