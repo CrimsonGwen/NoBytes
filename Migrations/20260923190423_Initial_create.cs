@@ -22,7 +22,7 @@ namespace Restaurant.Migrations
             migrationBuilder.RenameColumn(
                 name: "Betaald",
                 table: "Reservatie",
-                newName: "Bestaald");
+                newName: "Betaald");
         }
     }
 }
