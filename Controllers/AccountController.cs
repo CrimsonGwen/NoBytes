@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Restaurant.Controllers
@@ -10,6 +12,7 @@ namespace Restaurant.Controllers
         private readonly SignInManager<CustomUser> _signInManager;
         private readonly IUnitOfWork _context;
         private readonly IMapper _mapper;
+        private readonly UserManager<CustomUser> _userManager;
 
         public AccountController(ILogger<AccountController> logger,UserManager<CustomUser> userManager, SignInManager<CustomUser> signInManager , IUnitOfWork context, IMapper mapper)
         {
@@ -18,6 +21,7 @@ namespace Restaurant.Controllers
             _signInManager = signInManager;
             _context = context;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         [HttpGet]
