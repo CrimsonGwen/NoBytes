@@ -16,9 +16,28 @@
     </div>
 </dialog>
 
+<dialog id="confirmModal" class="p-4 rounded shadow border bg-white border-secondary">
+    <div class="vstack gap-3" style="min-width: 300px;">
+        <h3 class="h5 fw-bold text-primary">Controleer je gegevens</h3>
+        <p class="small text-muted mb-0">Zijn deze gegevens correct?</p>
+        
+        <ul class="list-unstyled small mb-3">
+            <li><strong>Naam:</strong> <span id="confVoornaam"></span> <span id="confAchternaam"></span></li>
+            <li><strong>Gebruikersnaam:</strong> <span id="confGebruikersnaam"></span></li>
+            <li><strong>Email:</strong> <span id="confEmail"></span></li>
+            <li><strong>Adres:</strong> <span id="confAdres"></span> <span id="confHuisnummer"></span>, <span id="confPostcode"></span> <span id="confGemeente"></span></li>
+        </ul>
+
+        <div class="d-flex justify-content-end gap-2">
+            <button type="button" id="cancelModalBtn" class="btn btn-secondary btn-sm">Nee, wijzigen</button>
+            <button type="button" id="confirmSubmitBtn" class="btn btn-primary btn-sm">Ja, verzenden</button>
+        </div>
+    </div>
+</dialog>
+
 <div>
     <h1>Maak een account aan</h1>
-    <form asp-controller="Account" asp-action="CreateAccount" method="post">
+    <form asp-controller="Account" asp-action="CreateAccount" method="post" id="registerForm">
         <div class="create-menu">
 
             <div class="gegevens">
@@ -91,4 +110,5 @@
 
 @section Scripts {
     <script src="~/js/errorModal.js" asp-append-version="true"></script>
+    <script src="~/js/confirmationModal.js" asp-append-version="true"></script>
 }

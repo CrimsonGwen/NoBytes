@@ -56,7 +56,7 @@ namespace Restaurant.Controllers
             {
                 await _userManager.AddToRoleAsync(user, "Klant");
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                //return RedirectToAction("Create", "Reservatie");
+                return RedirectToAction("Index", "Reservation");
             }
             else
             {
@@ -74,10 +74,6 @@ namespace Restaurant.Controllers
                 return View("Index", vm);
             }
 
-            await _context.CustomUserRepository.AddAsync(user);
-            await _context.SaveChangesAsync();
-
-            return View("Confirmation", user);
         }
 
         private async Task<CreateAccountViewModel> GetDataAsync()
