@@ -18,7 +18,10 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbContext<RestaurantContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDBConnection")));
 
-builder.Services.AddIdentity<CustomUser, IdentityRole>()
+builder.Services.AddIdentity<CustomUser, IdentityRole>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+})
     .AddEntityFrameworkStores<RestaurantContext>()
     .AddDefaultTokenProviders();
 

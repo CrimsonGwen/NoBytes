@@ -454,7 +454,7 @@ namespace Restaurant.Migrations
                     b.Property<int>("AantalPersonen")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Bestaald")
+                    b.Property<bool>("Betaald")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("Datum")

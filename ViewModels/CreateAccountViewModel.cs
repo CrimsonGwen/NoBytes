@@ -6,6 +6,8 @@
         public string Voornaam { get; set; } = string.Empty;
         [Required(ErrorMessage = "Voer een Achternaam in")]
         public string Achternaam { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Gebruikersnaam is verplicht.")]
+        public string Gebruikersnaam { get; set; }
         [Required(ErrorMessage = "Voer een Adres in")]
         public string Adres { get; set; } = string.Empty;
         [Required(ErrorMessage = "Voer een Huisnummer in")]
