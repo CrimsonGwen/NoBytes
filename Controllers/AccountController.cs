@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Restaurant.Controllers
@@ -8,12 +10,18 @@ namespace Restaurant.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly IUnitOfWork _context;
         private readonly IMapper _mapper;
+        private readonly UserManager<CustomUser> _userManager;
 
-        public AccountController(ILogger<AccountController> logger, IUnitOfWork context, IMapper mapper)
+        public AccountController(
+            ILogger<AccountController> logger,
+            IUnitOfWork context,
+            IMapper mapper,
+            UserManager<CustomUser> userManager)
         {
             _logger = logger;
             _context = context;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -30,18 +38,37 @@ namespace Restaurant.Controllers
             if (!ModelState.IsValid)
             {
                 var landen = await _context.LandenRepository.GetAllAsync();
+
                 vm.Landen = landen.Select(l => new SelectListItem
                 {
                     Value = l.Id.ToString(),
                     Text = l.Naam
                 });
+
                 return View("Index", vm);
             }
 
             var user = _mapper.Map<CustomUser>(vm);
 
-            await _context.CustomUserRepository.AddAsync(user);
-            await _context.SaveChangesAsync();
+            var result = await _userManager.CreateAsync(user, vm.Wachtwoord);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                var landen = await _context.LandenRepository.GetAllAsync();
+
+                vm.Landen = landen.Select(l => new SelectListItem
+                {
+                    Value = l.Id.ToString(),
+                    Text = l.Naam
+                });
+
+                return View("Index", vm);
+            }
 
             return View("Confirmation", user);
         }

@@ -20,6 +20,10 @@
         [Required(ErrorMessage = "Voer een wachtwoord in")]
         [DataType(DataType.Password)]
         public string Wachtwoord { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Bevestig je wachtwoord")]
+        [DataType(DataType.Password)]
+        [Compare(nameof(Wachtwoord), ErrorMessage = "De wachtwoorden komen niet overeen")]
+        public string BevestigWachtwoord { get; set; } = string.Empty;
         public int LandId { get; set; }
         public IEnumerable<SelectListItem>? Landen { get; set; }
     }
