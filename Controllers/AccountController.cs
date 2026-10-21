@@ -12,7 +12,6 @@ namespace Restaurant.Controllers
         private readonly SignInManager<CustomUser> _signInManager;
         private readonly IUnitOfWork _context;
         private readonly IMapper _mapper;
-        private readonly UserManager<CustomUser> _userManager;
 
         public AccountController(ILogger<AccountController> logger,UserManager<CustomUser> userManager, SignInManager<CustomUser> signInManager , IUnitOfWork context, IMapper mapper)
         {
