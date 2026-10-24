@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Restaurant.Controllers
@@ -18,6 +20,7 @@ namespace Restaurant.Controllers
             _signInManager = signInManager;
             _context = context;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         [HttpGet]

@@ -4,8 +4,8 @@
     --bg-color: #F79D5C;
     --text-color: #000000;
     --accent-color: #F52F57;
-    --main-font: 'Silkscreen', sans-serif;
-    --heading-font: 'Silkscreen', cursive;
+    --main-font: "Roboto", sans-serif;
+    --heading-font: "Roboto", cursiv;
 }
 
 html {
