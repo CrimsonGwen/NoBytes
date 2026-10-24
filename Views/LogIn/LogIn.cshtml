@@ -3,11 +3,15 @@
     ViewData["Title"] = "LogIn";
 }
 
+<dialog>
+
+</dialog>
+
 <div class ="text-center hero">
     <div class="text-background">
         <h1>Log in</h1>
 
-        <form asp-action="Login" method="post">
+        <form asp-controller="LogIn" asp-action="Login" method="post">
 
             <div class="label">
                 <label asp-for="Email" class="form-label">Gebruikersnaam</label>
@@ -28,7 +32,7 @@
         </form>
 
         <div class="home-btn-group">
-            <button type="submit" asp-action="Index" class="home-btn">Inloggen</button>
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="home-btn">Inloggen</a>
         </div>
 
         
