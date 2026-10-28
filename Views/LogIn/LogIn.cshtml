@@ -3,40 +3,38 @@
     ViewData["Title"] = "LogIn";
 }
 
-<div class="text-center">
-    <h1>Log in</h1>
+<div class ="text-center hero">
+    <div class="text-background">
+        <h1>Log in</h1> 
 
-    <form asp-action="Login" method="post">
+        <form asp-action="Login" method="post">
 
+            <div class="label">
+                <label asp-for="Email" class="form-label">Gebruikersnaam</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="label">
+                <label asp-for="Password" class="form-label">Wachtwoord</label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="label">
+                <span asp-validation-summary="All"></span>
+            </div>
+            
+        </form>
+
+        <div class="home-btn-group">
+            <button type="submit" asp-action="Index" class="home-btn">Inloggen</button>
+        </div>
+
+        
         <div>
-            <label asp-for="Email" class="form-label">Gebruikersnaam</label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+            <p><a asp-area="" asp-controller="Gebruiker" asp-action="WachtwoordVergeten">Wachtwoord Vergeten?</a> </p>
         </div>
+    </div>
 
-        <div>
-            <label asp-for="Password" class="form-label">Wachtwoord</label>
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-
-        <div>
-            <span asp-validation-summary="All"></span>
-        </div>
-
-        <button type="submit" asp-action="Index" class="home-btn">Inloggen</button>
-
-        <div>
-            <p><a asp-area="" asp-controller="" asp-action="Index">Nog geen acount klik hier.</a> </p>
-        </div>
-
-        <div class="mt-2">
-            <p>
-                <a asp-controller="Gebruiker"
-                   asp-action="WachtwoordVergeten">
-                    Wachtwoord vergeten?
-                </a>
-            </p>
-        </div>
-    </form>
 </div>

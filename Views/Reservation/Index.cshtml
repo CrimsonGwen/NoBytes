@@ -1,8 +1,82 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ReservationViewModel
 @{
     ViewData["Title"] = "Reservation Page";
 }
 
-<h1>Dit is de reservatie pagina</h1>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-body p-4 p-md-5">
+
+                    <h2 class="fw-bold text-center mb-4 text-primary">Tafel Reserveren</h2>
+
+                    <!-- Algemene foutmeldingen -->
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                    <!-- Alternatieve tijdstippen weergave indien volgeboekt -->
+                    @if (Model.AlternativeSlots != null && Model.AlternativeSlots.Any())
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            <h5 class="alert-heading fw-bold">Alternatieve tijdstippen</h5>
+                            <p>Het gekozen tijdslot zit helaas vol. Probeer een van de volgende beschikbare opties:</p>
+                            <ul>
+                                @foreach (var slot in Model.AlternativeSlots)
+                                {
+                                    <li>@slot</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+                    <!-- Reserveringsformulier -->
+                    <form asp-action="Index" method="post">
+
+                        <!-- Datum -->
+                        <div class="mb-3">
+                            <label asp-for="Date" class="form-label fw-semibold"></label>
+                            <input asp-for="Date" class="form-control" type="date" />
+                            <span asp-validation-for="Date" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Tijdslot -->
+                        <div class="mb-3">
+                            <label asp-for="TijdSlotId" class="form-label fw-semibold">Tijdslot</label>
+                            <select asp-for="TijdSlotId" asp-items="Model.BeschikbareTijdSloten" class="form-select">
+                                <option value="" disabled selected>-- Kies een tijdslot --</option>
+                            </select>
+                            <span asp-validation-for="TijdSlotId" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Aantal Personen -->
+                        <div class="mb-3">
+                            <label asp-for="Persons" class="form-label fw-semibold">Aantal Personen</label>
+                            <input asp-for="Persons" class="form-control" type="number" min="1" max="12" />
+                            <span asp-validation-for="Persons" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Speciale verzoeken -->
+                        <div class="mb-3">
+                            <label asp-for="SpecialRequests" class="form-label fw-semibold">Speciale verzoeken (optioneel)</label>
+                            <textarea asp-for="SpecialRequests" class="form-control" rows="3" placeholder="Bijv. dieetwensen, allergieën of kinderstoel..."></textarea>
+                            <span asp-validation-for="SpecialRequests" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Submit knop -->
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill">Bevestig Reservatie</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

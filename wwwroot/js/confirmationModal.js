@@ -8,6 +8,9 @@
         let isConfirmed = false;
 
         form.addEventListener("submit", function (e) {
+            if ($(form).valid())
+                return;
+
             if (!isConfirmed) {
                 e.preventDefault();
                 document.getElementById("confVoornaam").innerText = document.querySelector("[name='Voornaam']").value;
@@ -32,5 +35,5 @@
         cancelBtn.addEventListener("click", function () {
             confirmModal.close();
         });
-    }
+    } 
 });
