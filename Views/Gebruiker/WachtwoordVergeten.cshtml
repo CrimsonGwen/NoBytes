@@ -4,49 +4,93 @@
     ViewData["Title"] = "Wachtwoord vergeten";
 }
 
-<h2>Wachtwoord vergeten</h2>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
 
-@if (TempData["ResetMelding"] != null)
+            <h2 class="text-center mb-4">Wachtwoord vergeten</h2>
+
+            <p class="text-center mb-4">
+                Vul je e-mailadres in om je wachtwoord
+                opnieuw in te stellen.
+            </p>
+
+            @if (TempData["ResetFout"] != null)
+            {
+                <div class="alert alert-danger text-center">
+                    @TempData["ResetFout"]
+                </div>
+            }
+
+            <form asp-controller="Gebruiker"
+                  asp-action="WachtwoordVergeten"
+                  method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">
+                        E-mailadres
+                    </label>
+
+                    <input asp-for="Email"
+                           type="email"
+                           class="form-control"
+                           placeholder="naam@voorbeeld.be" />
+
+                    <span asp-validation-for="Email"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary px-4">
+                        Resetlink aanvragen
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@if (TempData["ResetMelding"] != null ||
+     TempData["ResetSucces"] != null)
 {
-    <div class="alert alert-success">
-        @TempData["ResetMelding"]
-    </div>
+    var melding = TempData["ResetSucces"]?.ToString()
+        ?? TempData["ResetMelding"]?.ToString();
+
+    <dialog id="resetModal"
+            class="p-4 rounded shadow border-0"
+            style="max-width: 450px; width: 90%;">
+
+        <div class="text-center">
+
+            <h3 class="text-success mb-3">
+                Gelukt!
+            </h3>
+
+            <p>@melding</p>
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="btn btn-primary px-5 mt-3">
+                OK
+            </a>
+
+        </div>
+    </dialog>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("resetModal");
+
+            if (modal) {
+                modal.showModal();
+            }
+        });
+    </script>
 }
-
-@if (TempData["ResetSucces"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["ResetSucces"]
-    </div>
-}
-
-@if (TempData["ResetFout"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["ResetFout"]
-    </div>
-}
-
-<p>Vul je e-mailadres in om je wachtwoord opnieuw in te stellen.</p>
-
-<form asp-action="WachtwoordVergeten" method="post">
-
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label">E-mailadres</label>
-
-        <input asp-for="Email"
-               class="form-control"
-               placeholder="naam@voorbeeld.be" />
-
-        <span asp-validation-for="Email"
-              class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">
-        Resetlink aanvragen
-    </button>
-
-</form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
