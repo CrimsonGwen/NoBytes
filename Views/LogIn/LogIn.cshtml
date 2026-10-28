@@ -17,7 +17,7 @@
         <div>
             <label asp-for="Password" class="form-label">Wachtwoord</label>
             <input asp-for="Password" class="form-control" />
-            <span asp-validation-for ="Password" class="text-danger"></span>
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
 
         <div>
@@ -29,6 +29,14 @@
         <div>
             <p><a asp-area="" asp-controller="" asp-action="Index">Nog geen acount klik hier.</a> </p>
         </div>
+
+        <div class="mt-2">
+            <p>
+                <a asp-controller="Gebruiker"
+                   asp-action="WachtwoordVergeten">
+                    Wachtwoord vergeten?
+                </a>
+            </p>
+        </div>
     </form>
 </div>
-
