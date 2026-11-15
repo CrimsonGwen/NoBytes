@@ -1,27 +1,111 @@
+/* ==========================================
+   1. ROOT VARIABLES & PALETTE CONFIGURATION
+   ========================================== */
 :root {
-    --primary-color: #F3752B;
-    --secundary-color: #A20021;
-    --bg-color: #F79D5C;
-    --text-color: #000000;
-    --accent-color: #F52F57;
-    --main-font: "Roboto", sans-serif;
-    --heading-font: "Roboto", cursiv;
+    /* --- Single Source Color Palette --- */
+    --color-slate-900: #0f172a; /* Deep luxury navy/slate */
+    --color-slate-800: #1e293b; /* Secondary dark surface */
+    --color-cream-100: #f8fafc; /* Soft luxury off-white */
+    --color-gold-500: #c5a059; /* Champagne gold primary accent */
+    --color-gold-400: #d4af37; /* Bright metallic gold highlight */
+    /* --- 3 New Accent Colors for Future Use --- */
+    --color-emerald: #2d4a3e; /* Deep jewel-toned emerald */
+    --color-burgundy: #581c25; /* Sophisticated wine/burgundy */
+    --color-bronze: #b8860b; /* Warm metallic bronze */
+    /* --- Semantic Theme Mapping --- */
+    --primary-color: var(--color-slate-900);
+    --secundary-color: var(--color-gold-500);
+    --bg-color: var(--color-cream-100);
+    --text-color: var(--color-slate-800);
+    --accent-color: var(--color-gold-400);
+    /* --- Typography --- */
+    --main-font: "Inter", "Roboto", sans-serif;
+    --heading-font: "Playfair Display", Georgia, serif;
 }
 
-/* --- Luxury Split Screen Home Styles --- */
+/* ==========================================
+   2. GLOBAL STYLES & TYPOGRAPHY
+   ========================================== */
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    font-family: var(--main-font);
+    color: var(--text-color);
+    background-color: var(--bg-color);
 }
 
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: var(--heading-font);
+}
+
+a {
+    color: var(--secundary-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+    a:hover {
+        color: var(--accent-color);
+    }
+
+/* ==========================================
+   3. STANDARD LAYOUT (NAVBAR & FOOTER)
+   ========================================== */
+.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-weight: 600;
+    color: var(--primary-color) !important;
+}
+
+.custom-border-top {
+    border-top: 2px solid var(--accent-color);
+}
+
+.custom-border-bottom {
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+.footer {
+    width: 100%;
+    white-space: nowrap;
+    line-height: normal;
+    padding: 10px 0;
+    text-align: center;
+    background-color: var(--bg-color);
+}
+
+.nobytes-logo {
+    height: 8vh;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    max-height: 50px;
+}
+
+/* ==========================================
+   4. LUXURY SPLIT-SCREEN HOMESCREEN
+   ========================================== */
 .split-hero-wrapper {
     position: relative;
     display: flex;
     width: 100vw;
     height: 100vh;
-    background-color: #0f172a; /* Luxury dark navy base */
+    background-color: var(--primary-color);
 }
 
 /* Floating Brand Header at Top Center */
@@ -38,7 +122,7 @@ html, body {
     padding: 10px 25px;
     border-radius: 50px;
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(197, 160, 89, 0.3); /* Subtle gold accent */
+    border: 1px solid rgba(197, 160, 89, 0.3);
 }
 
 .hero-brand-logo {
@@ -47,10 +131,10 @@ html, body {
 }
 
 .hero-brand-title {
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--heading-font);
     font-size: 1.4rem;
-    font-weight: 500;
-    color: #f8fafc;
+    font-weight: 600;
+    color: var(--color-cream-100);
     margin: 0;
     letter-spacing: 1px;
 }
@@ -72,33 +156,33 @@ html, body {
 
     /* Hover Pop-Out Effect */
     .split-pane:hover {
-        flex: 1.6; /* Expands smoothly when hovered */
+        flex: 1.6;
     }
 
-/* Individual Panel Backgrounds & Luxury Tones */
+/* Individual Panel Backgrounds */
 .pane-left {
     background-image: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.7)), url('/bernd-dittrich-e48jHQjjQrw-unsplash.jpg');
-    background-color: #1e293b;
+    background-color: var(--color-slate-800);
     border-right: 2px solid rgba(197, 160, 89, 0.3);
 }
 
 .pane-right {
     background-image: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.7)), url('/michal-lis-NqagKaulCyc-unsplash.jpg');
-    background-color: #0f172a;
+    background-color: var(--primary-color);
 }
 
 .pane-content {
     z-index: 2;
 }
 
-/* Luxury Button Styling */
+/* Luxury Interactive Buttons */
 .luxury-btn {
     display: inline-block;
-    color: #0f172a;
-    background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
+    color: var(--primary-color);
+    background: linear-gradient(135deg, var(--color-cream-100) 0%, #cbd5e1 100%);
     padding: 14px 40px;
     border-radius: 6px;
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--main-font);
     font-size: 1.25rem;
     font-weight: 500;
     text-decoration: none;
@@ -109,7 +193,7 @@ html, body {
 }
 
     .luxury-btn:hover {
-        background: linear-gradient(135deg, #c5a059 0%, #d4af37 100%);
+        background: linear-gradient(135deg, var(--secundary-color) 0%, var(--accent-color) 100%);
         color: #ffffff;
         transform: translateY(-3px);
         box-shadow: 0 15px 30px rgba(197, 160, 89, 0.4);
