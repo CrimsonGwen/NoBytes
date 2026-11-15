@@ -8,50 +8,110 @@
     --heading-font: "Roboto", cursiv;
 }
 
-html {
-    position: relative;
-    font-size: 14px;
-    height: 100%;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
+/* --- Luxury Split Screen Home Styles --- */
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
-body {
-    font-family: var(--main-font);
-    background: linear-gradient(25deg, var(--bg-color), var(--primary-color));
-    color: var(--text-color);
+.split-hero-wrapper {
+    position: relative;
     display: flex;
-    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0f172a; /* Luxury dark navy base */
 }
 
-h1, h2, h3, h4, h5, h6, .display-4 {
-    font-family: var(--heading-font);
-    color: var(--text-color);
-}
-
-.silkscreen-bold {
-    font-family: 'Silkscreen', cursive !important;
-    font-weight: bold !important;
-    color: #F3752B !important;
-}
-
-.navbar {
-    background-color: var(--secundary-color);
-}
-
-main {
+/* Floating Brand Header at Top Center */
+.hero-header-overlay {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
     display: flex;
-    flex-direction: column;
-    flex: 1 0 auto;
-    width: 100%;
+    align-items: center;
+    gap: 15px;
+    background: rgba(15, 23, 42, 0.85);
+    padding: 10px 25px;
+    border-radius: 50px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(197, 160, 89, 0.3); /* Subtle gold accent */
 }
+
+.hero-brand-logo {
+    height: 40px;
+    width: auto;
+}
+
+.hero-brand-title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #f8fafc;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+/* Split Panes */
+.split-pane {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 10vh;
+    transition: flex 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+    /* Hover Pop-Out Effect */
+    .split-pane:hover {
+        flex: 1.6; /* Expands smoothly when hovered */
+    }
+
+/* Individual Panel Backgrounds & Luxury Tones */
+.pane-left {
+    background-image: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.7)), url('/bernd-dittrich-e48jHQjjQrw-unsplash.jpg');
+    background-color: #1e293b;
+    border-right: 2px solid rgba(197, 160, 89, 0.3);
+}
+
+.pane-right {
+    background-image: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.7)), url('/michal-lis-NqagKaulCyc-unsplash.jpg');
+    background-color: #0f172a;
+}
+
+.pane-content {
+    z-index: 2;
+}
+
+/* Luxury Button Styling */
+.luxury-btn {
+    display: inline-block;
+    color: #0f172a;
+    background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
+    padding: 14px 40px;
+    border-radius: 6px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(197, 160, 89, 0.5);
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+}
+
+    .luxury-btn:hover {
+        background: linear-gradient(135deg, #c5a059 0%, #d4af37 100%);
+        color: #ffffff;
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(197, 160, 89, 0.4);
+        text-decoration: none;
+    }
