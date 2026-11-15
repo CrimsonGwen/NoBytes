@@ -29,7 +29,7 @@ builder.Services.AddScoped<RestaurantContext>(provider =>
     try
     {
         var connectionBuilder = new SqlConnectionStringBuilder(localDB);
-        connectionBuilder.ConnectTimeout = 3;
+        connectionBuilder.ConnectTimeout = 1;
 
         using var connection = new SqlConnection(connectionBuilder.ConnectionString);
         connection.Open();
