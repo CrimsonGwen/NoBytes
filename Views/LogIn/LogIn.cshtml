@@ -43,5 +43,18 @@
         <a asp-area="" asp-controller="CreatOrder" asp-action="Index" class="home-btn">Bestellen</a>
     </div>
 
-    
+    <div class="text-background">
+        <h5 class="card-title">Product Naam</h5>
+        <p class="card-text">
+            <b>Beschrijving: </b><br />
+            <b>Allergieen: </b> <br />
+            <b>Prijs: </b>
+        </p>
+        <button type="button" onclick="add()" class="btn btn-primary">Add to cart</button>
+
+    </div>
 </div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}
