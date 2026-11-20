@@ -1,17 +1,26 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    ViewData["HideNavbar"] = true;
 }
 
-<div class="text-center hero-container">
-        <div>
-            <img src="/Pixelkok met dampende Pizza.png" class="hero-image"/>
+<div class="split-hero-wrapper">
+    <!-- Top Floating Logo & Title -->
+    <div class="hero-header-overlay">
+        <img src="/Pixelkok met dampende pizza.png" class="hero-brand-logo" alt="NoBytes Logo" />
+        <h1 class="hero-brand-title">NoBytes</h1>
+    </div>
+
+    <!-- Left Panel (Login) -->
+    <div class="split-pane pane-left">
+        <div class="pane-content">
+            <a class="luxury-btn" asp-area="" asp-controller="LogIn" asp-action="LogIn">Login</a>
         </div>
-        <div class="text-background">
-            <h1 class="display-4">Welkom bij Nobytes</h1>
-            <h2 class="display-4">Waar er geen bytes overblijven</h2>
+    </div>
+
+    <!-- Right Panel (Create) -->
+    <div class="split-pane pane-right">
+        <div class="pane-content">
+            <a class="luxury-btn" asp-controller="Account" asp-action="Index">Creër</a>
         </div>
-        <div class="home-btn-group">
-            <a class="home-btn-login" asp-area="" asp-controller="LogIn" asp-action="LogIn">Login</a>
-            <a class="home-btn-create" asp-controller="Account" asp-action="Index">Creër</a>
-        </div>
+    </div>
 </div>
