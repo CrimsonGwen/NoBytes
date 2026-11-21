@@ -18,7 +18,7 @@ namespace Restaurant.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(model);
             }
 
             string rol = "";
@@ -42,11 +42,11 @@ namespace Restaurant.Controllers
 
             if(rol == "Eigenaar")
                 {
-                return RedirectToAction("index", "Home");
+                return RedirectToAction("index", "Owner");
                 }
             else
             {
-                return RedirectToAction("index", "Home");
+                return RedirectToAction("index", "Klant");
             }
         }
     }
