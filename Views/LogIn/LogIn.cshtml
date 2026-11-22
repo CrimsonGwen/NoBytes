@@ -14,9 +14,9 @@
         <form asp-controller="LogIn" asp-action="Login" method="post">
 
             <div class="label">
-                <label asp-for="Email" class="form-label">Gebruikersnaam</label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Gebruikersnaam" class="form-label">Gebruikersnaam</label>
+                <input asp-for="Gebruikersnaam" class="form-control" />
+                <span asp-validation-for="Gebruikersnaam" class="text-danger"></span>
             </div>
 
             <div class="label">
@@ -28,12 +28,12 @@
             <div class="label">
                 <span asp-validation-summary="All"></span>
             </div>
-            
+            <button type="submit" class="home-btn">Inloggen</button>
         </form>
 
-        <div class="home-btn-group">
+        @* <div class="home-btn-group">
             <a asp-area="" asp-controller="" asp-action="" class="home-btn">Inloggen</a>
-        </div>
+        </div> *@
 
         <div>
             <p><a asp-area="" asp-controller="Gebruiker" asp-action="WachtwoordVergeten">Wachtwoord Vergeten?</a> </p>

@@ -26,19 +26,19 @@ namespace Restaurant.Controllers
             string? rol = null;
 
 
-            if (model.Email == "AllBytes" && model.Password == "NoBytesOwner2440")
+            if (model.Gebruikersnaam == "AllBytes" && model.Password == "NoBytesOwner2440")
             {
                 rol = "Eigenaar";
             }
-            else if (model.Email == "BigBytes" && model.Password == "NoBytesManager2440")
+            else if (model.Gebruikersnaam == "BigBytes" && model.Password == "NoBytesManager2440")
             {
                 rol = "Manager";
             }
-            else if (model.Email == "MediumBytes" && model.Password == "NoBytesWaiter2440")
+            else if (model.Gebruikersnaam == "MediumBytes" && model.Password == "NoBytesWaiter2440")
             {
                 rol = "Waiter";
             }
-            else if (model.Email == "SmallBytes" && model.Password == "NoBytesCook2440")
+            else if (model.Gebruikersnaam == "SmallBytes" && model.Password == "NoBytesCook2440")
             {
                 rol = "Cook";
             }
@@ -52,7 +52,7 @@ namespace Restaurant.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, model.Email),
+                new Claim(ClaimTypes.Name, model.Gebruikersnaam),
                 new Claim(ClaimTypes.Role, rol)
             };
 
