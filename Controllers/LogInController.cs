@@ -23,21 +23,8 @@ namespace Restaurant.Controllers
                 return View(model);
             }
 
-            string rol = null;
+            string? rol = null;
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, model.Email),
-                new Claim(ClaimTypes.Role, rol)
-            };
-
-            var identity = new ClaimsIdentity(
-                claims, CookieAuthenticationDefaults.AuthenticationScheme
-            );
-
-            var pricipal = new ClaimsPrincipal(identity);
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, pricipal);
 
             if (model.Email == "AllBytes" && model.Password == "NoBytesOwner2440")
             {
@@ -56,6 +43,26 @@ namespace Restaurant.Controllers
                 rol = "Cook";
             }
 
+            if (rol == null) 
+            {
+                ModelState.AddModelError
+                    ("", "Ongeldige gebruikersnaam of wachtwoord.");
+                return View(model);
+            }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, model.Email),
+                new Claim(ClaimTypes.Role, rol)
+            };
+
+            var identity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme
+            );
+
+            var pricipal = new ClaimsPrincipal(identity);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, pricipal);
 
             switch (rol)
             {
@@ -71,8 +78,11 @@ namespace Restaurant.Controllers
                 case "Waiter":
                     return RedirectToAction("Index", "Waiter");
 
-                case "":
-                    return RedirectToAction("index", "Klant");
+                case "Klant":
+                    return RedirectToAction("Index", "Klant");
+
+                default:
+                    return RedirectToAction("Login");
             }
 
         }
