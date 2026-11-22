@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.Data;
+using System.Security.Claims;
+using Restaurant.Models;
 
 namespace Restaurant.Controllers
 {
@@ -14,14 +16,28 @@ namespace Restaurant.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> login(LogInVieuwModel model)
+        public async Task<IActionResult> Login(LogInVieuwModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            string rol = "";
+            string rol = null;
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, model.Email),
+                new Claim(ClaimTypes.Role, rol)
+            };
+
+            var identity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme
+            );
+
+            var pricipal = new ClaimsPrincipal(identity);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, pricipal);
 
             if (model.Email == "AllBytes" && model.Password == "NoBytesOwner2440")
             {
@@ -40,14 +56,34 @@ namespace Restaurant.Controllers
                 rol = "Cook";
             }
 
-            if(rol == "Eigenaar")
-                {
-                return RedirectToAction("index", "Owner");
-                }
-            else
+
+            switch (rol)
             {
-                return RedirectToAction("index", "Klant");
+                case "Eigenaar":
+                    return RedirectToAction("Index", "Owner");
+
+                case "Manager":
+                    return RedirectToAction("Index", "Manager");
+
+                case "Cook":
+                    return RedirectToAction("Index", "Kok");
+
+                case "Waiter":
+                    return RedirectToAction("Index", "Waiter");
+
+                case "":
+                    return RedirectToAction("index", "Klant");
             }
+
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme
+                );
+            return RedirectToAction("Login");
+        }
+
     }
 }
