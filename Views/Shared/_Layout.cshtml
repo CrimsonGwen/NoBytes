@@ -12,40 +12,64 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-@if (ViewData["HideNavbar"] == null || !(bool)ViewData["HideNavbar"])
+    @{
+        var isHomescreen = ViewData["IsHomescreen"] as bool? ?? false;
+        var isAuthenticated = User?.Identity?.IsAuthenticated ?? false;
+    }
+
+    @if (isHomescreen)
     {
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light custom-border-bottom box-shadow">
-                <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="/Pixelkok met dampende pizza.png" class="nobytes-logo"/>
-                        NoBytes
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                        </ul>
-                    </div>
+        <header class="home-minimal-header">
+            <a class="brand-pill" asp-area="" asp-controller="Home" asp-action="Index">
+                <img src="/Pixelkok met dampende pizza.png" class="nobytes-logo" alt="NoBytes Logo" />
+                <span class="brand-pill-title">NoBytes</span>
+            </a>
+        </header>
+    }
+    else
+    {
+        <header class="app-header">
+            <nav class="app-navbar">
+                <!-- Left of logo: Home & Account -->
+                <div class="nav-group-left">
+                    <a class="nav-link-luxury" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="nav-link-luxury" asp-area="" asp-controller="Account" asp-action="Index">Account</a>
+                </div>
+
+                <!-- Center: Pill Brand Badge -->
+                <a class="brand-pill brand-pill--compact" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="/Pixelkok met dampende pizza.png" class="nobytes-logo" alt="NoBytes Logo" />
+                    <span class="brand-pill-title">NoBytes</span>
+                </a>
+
+                <!-- Right: Full navigation only once logged in -->
+                <div class="nav-group-right">
+                    @if (isAuthenticated)
+                    {
+                        <a class="nav-link-luxury" asp-controller="Owner" asp-action="Dashboard">Dashboard</a>
+                        <a class="nav-link-luxury" asp-controller="Reservations" asp-action="Index">Reservations</a>
+                        <a class="nav-link-luxury" asp-controller="Users" asp-action="Index">Users</a>
+                        <a class="nav-link-luxury" asp-controller="Emails" asp-action="Index">Emails</a>
+                        <a class="nav-link-luxury" asp-controller="Reports" asp-action="Index">Reports</a>
+                    }
+                    else
+                    {
+                        <a class="nav-link-luxury" asp-controller="LogIn" asp-action="LogIn">Login</a>
+                    }
                 </div>
             </nav>
         </header>
     }
 
-    <main role="main" class="@(ViewData["HideNavbar"] != null && (bool)ViewData["HideNavbar"] ? "p-0 m-0 h-100" : "pb-3")">
+    <main role="main" class="@(isHomescreen ? "p-0 m-0" : "app-main")">
         @RenderBody()
     </main>
 
-    @if (ViewData["HideNavbar"] == null || !(bool)ViewData["HideNavbar"])
+    @if (!isHomescreen)
     {
-        <footer class="custom-border-top footer text-muted">
+        <footer class="custom-border-top footer">
             <div class="container">
-                &copy; 2025 - Restaurant - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                &copy; 2026 - NoBytes - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
         </footer>
     }
