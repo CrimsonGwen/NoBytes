@@ -1,0 +1,54 @@
+﻿@model Restaurant.ViewModels.LogInViewModel;
+@{
+    ViewData["Title"] = "LogIn";
+}
+
+<dialog>
+
+</dialog>
+
+<div class="text-center hero">
+    <div class="text-background">
+        <h1>Log in</h1>
+
+        <form asp-controller="Account" asp-action="Login" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @if (ViewBag.ShowRegisterOption == true)
+            {
+                <div class="alert-box">
+                    <p>Wil je een nieuw account aanmaken of opnieuw proberen?</p>
+                    <a asp-controller="LogIn" asp-action="Login">Terug naar login</a>
+                    <span>|</span>
+                    <a asp-controller="Account" asp-action="Register">Account aanmaken</a>
+                </div>
+            }
+
+            <div class="label">
+                <label asp-for="Email" class="form-label">E-mailadres</label>
+                <input asp-for="Email" type="email" class="form-control" autocomplete="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="label">
+                <label asp-for="Password" class="form-label">Wachtwoord</label>
+                <input asp-for="Password" type="password" class="form-control" autocomplete="current-password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="home-btn">Inloggen</button>
+        </form>
+
+        <div>
+            <p>
+                <a asp-controller="Gebruiker" asp-action="WachtwoordVergeten">Wachtwoord vergeten?</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}

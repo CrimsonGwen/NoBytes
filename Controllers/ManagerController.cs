@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace Restaurant.Controllers
 {
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Zaalverantwoordelijke")]
     public class ManagerController : Controller
     {
         public IActionResult Index()

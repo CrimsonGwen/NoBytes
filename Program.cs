@@ -32,7 +32,7 @@ builder.Services.AddScoped<RestaurantContext>(provider =>
     try
     {
         var connectionBuilder = new SqlConnectionStringBuilder(localDB);
-        connectionBuilder.ConnectTimeout = 1;
+        connectionBuilder.ConnectTimeout = 3;
 
         using var connection = new SqlConnection(connectionBuilder.ConnectionString);
         connection.Open();
@@ -56,16 +56,16 @@ builder.Services.AddIdentity<CustomUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<RestaurantContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-}).AddCookie();
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//}).AddCookie();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = "/Gebruiker/Login"; // Pad naar de inlogpagina
+    options.LoginPath = "/Account/Login"; // Pad naar de inlogpagina
     options.AccessDeniedPath = "/Home/Index"; // Pad naar de homepagina
 });
 
