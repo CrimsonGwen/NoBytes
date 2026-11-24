@@ -1,4 +1,4 @@
-﻿@model LogInVieuwModel;
+﻿@model Restaurant.ViewModels.LogInVieuwModel;
 @{
     ViewData["Title"] = "LogIn";
 }
@@ -14,9 +14,9 @@
         <form asp-controller="LogIn" asp-action="Login" method="post">
 
             <div class="label">
-                <label asp-for="Email" class="form-label">Gebruikersnaam</label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Gebruikersnaam" class="form-label">Gebruikersnaam</label>
+                <input asp-for="Gebruikersnaam" class="form-control" />
+                <span asp-validation-for="Gebruikersnaam" class="text-danger"></span>
             </div>
 
             <div class="label">
@@ -28,30 +28,16 @@
             <div class="label">
                 <span asp-validation-summary="All"></span>
             </div>
-            
+            <button type="submit" class="home-btn">Inloggen</button>
         </form>
 
-        <div class="home-btn-group">
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="home-btn">Inloggen</a>
-        </div>
+        @* <div class="home-btn-group">
+            <a asp-area="" asp-controller="" asp-action="" class="home-btn">Inloggen</a>
+        </div> *@
 
         <div>
             <p><a asp-area="" asp-controller="Gebruiker" asp-action="WachtwoordVergeten">Wachtwoord Vergeten?</a> </p>
         </div>
-    </div>
-    <div class="home-btn-group">
-        <a asp-area="" asp-controller="CreatOrder" asp-action="Index" class="home-btn">Bestellen</a>
-    </div>
-
-    <div class="text-background">
-        <h5 class="card-title">Product Naam</h5>
-        <p class="card-text">
-            <b>Beschrijving: </b><br />
-            <b>Allergieen: </b> <br />
-            <b>Prijs: </b>
-        </p>
-        <button type="button" onclick="add()" class="btn btn-primary">Add to cart</button>
-
     </div>
 </div>
 

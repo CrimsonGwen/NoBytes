@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Data.SqlClient;
 using Restaurant.Configuration;
 using Restaurant.Services;
@@ -15,6 +16,7 @@ builder.Services.Configure<EmailSettings>(
 
 builder.Services.AddScoped<EmailService>();
 
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //builder.Services.AddDbContext<RestaurantContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDBConnection")));
@@ -23,6 +25,7 @@ builder.Services.AddScoped<RestaurantContext>(provider =>
     var configuration = provider.GetRequiredService<IConfiguration>();
     var localDB = configuration.GetConnectionString("LocalDBConnection");
     var dockerDB = configuration.GetConnectionString("DockerDBConnection");
+
 
     string activeConnection = localDB;
 
@@ -53,6 +56,12 @@ builder.Services.AddIdentity<CustomUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<RestaurantContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
