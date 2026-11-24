@@ -1,57 +1,201 @@
+/* ==========================================
+   1. ROOT VARIABLES & PALETTE CONFIGURATION
+   ========================================== */
 :root {
-    --primary-color: #F3752B;
-    --secundary-color: #A20021;
-    --bg-color: #F79D5C;
-    --text-color: #000000;
-    --accent-color: #F52F57;
-    --main-font: "Roboto", sans-serif;
-    --heading-font: "Roboto", cursiv;
+    /* --- Single Source Color Palette --- */
+    --color-slate-900: #0f172a; /* Deep luxury navy/slate */
+    --color-slate-800: #1e293b; /* Secondary dark surface */
+    --color-cream-100: #F6D8AE; /* Soft luxury off-white */
+    --color-gold-500: #c5a059; /* Champagne gold primary accent */
+    --color-gold-400: #d4af37; /* Bright metallic gold highlight */
+    /* --- 3 New Accent Colors for Future Use --- */
+    --color-emerald: #2d4a3e; /* Deep jewel-toned emerald */
+    --color-burgundy: #581c25; /* Sophisticated wine/burgundy */
+    --color-bronze: #b8860b; /* Warm metallic bronze */
+    /* --- Semantic Theme Mapping --- */
+    --primary-color: var(--color-slate-900);
+    --secundary-color: var(--color-gold-500);
+    --bg-color: var(--color-cream-100);
+    --text-color: var(--color-slate-800);
+    --accent-color: var(--color-gold-400);
+    /* --- Typography --- */
+    --main-font: "Inter", "Roboto", sans-serif;
+    --heading-font: "Playfair Display", Georgia, serif;
 }
 
-html {
-    position: relative;
-    font-size: 14px;
-    height: 100%;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
+/* ==========================================
+   2. GLOBAL STYLES & TYPOGRAPHY
+   ========================================== */
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-}
-
-body {
+    overflow-x: hidden;
     font-family: var(--main-font);
-    background: linear-gradient(25deg, var(--bg-color), var(--primary-color));
     color: var(--text-color);
-    display: flex;
-    flex-direction: column;
+    background-color: var(--bg-color);
 }
 
-h1, h2, h3, h4, h5, h6, .display-4 {
+h1, h2, h3, h4, h5, h6, .navbar-brand {
     font-family: var(--heading-font);
-    color: var(--text-color);
 }
 
-.silkscreen-bold {
-    font-family: 'Silkscreen', cursive !important;
-    font-weight: bold !important;
-    color: #F3752B !important;
+a {
+    color: var(--secundary-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
-.navbar {
-    background-color: var(--secundary-color);
+    a:hover {
+        color: var(--accent-color);
+    }
+
+/* ==========================================
+   3. STANDARD LAYOUT (NAVBAR & FOOTER)
+   ========================================== */
+.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-weight: 600;
+    color: var(--primary-color) !important;
 }
 
-main {
-    display: flex;
-    flex-direction: column;
-    flex: 1 0 auto;
+.custom-border-top {
+    border-top: 2px solid var(--accent-color);
+}
+
+.custom-border-bottom {
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+.footer {
     width: 100%;
+    white-space: nowrap;
+    line-height: normal;
+    padding: 10px 0;
+    text-align: center;
+    background-color: var(--bg-color);
 }
+
+.nobytes-logo {
+    height: 8vh;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    max-height: 50px;
+}
+
+/* ==========================================
+   4. LUXURY SPLIT-SCREEN HOMESCREEN
+   ========================================== */
+.split-hero-wrapper {
+    position: relative;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--primary-color);
+}
+
+/* Floating Brand Header at Top Center */
+.hero-header-overlay {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(15, 23, 42, 0.85);
+    padding: 10px 25px;
+    border-radius: 50px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+}
+
+.hero-brand-logo {
+    height: 40px;
+    width: auto;
+}
+
+.hero-brand-title {
+    font-family: var(--heading-font);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-cream-100);
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+/* Split Panes */
+.split-pane {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 10vh;
+    transition: flex 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+    /* Hover Pop-Out Effect */
+    .split-pane:hover {
+        flex: 1.6;
+    }
+
+/* Individual Panel Backgrounds */
+.pane-left {
+    background-image: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.7)), url('/hiding-ninja-Rpw5dto_LP4-unsplash.jpg');
+    background-color: var(--color-slate-800);
+    border-right: 2px solid rgba(197, 160, 89, 0.3);
+}
+
+.pane-right {
+    background-image: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.7)), url('/patrick-tomasso-GXXYkSwndP4-unsplash.jpg');
+    background-color: var(--primary-color);
+}
+
+.pane-content {
+    z-index: 2;
+}
+
+/* Luxury Interactive Buttons */
+.luxury-btn {
+    display: inline-block;
+    color: var(--primary-color);
+    background: linear-gradient(135deg, var(--color-cream-100) 25%, #cbd5e1 100%);
+    padding: 14px 40px;
+    border-radius: 6px;
+    font-family: var(--main-font);
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(197, 160, 89, 0.5);
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+}
+
+    .luxury-btn:hover {
+        background: linear-gradient(135deg, var(--secundary-color) 0%, var(--accent-color) 100%);
+        color: #ffffff;
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(197, 160, 89, 0.4);
+        text-decoration: none;
+    }
