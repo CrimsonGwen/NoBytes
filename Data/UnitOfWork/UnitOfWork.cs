@@ -8,6 +8,7 @@ namespace Restaurant.Data.UnitOfWork
         private IGenericRepository<Land>? landenRepository;
         private IGenericRepository<Reservatie>? reservatieRepository;
         private IGenericRepository<Tafel>? tafelRepository;
+        private IGenericRepository<Product>? productRepository;
 
         private ITafelRepository customTafelRepository;
 
@@ -68,6 +69,16 @@ namespace Restaurant.Data.UnitOfWork
                     this.customTafelRepository = new TafelRepository(_context);
 
                 return customTafelRepository;
+            }
+        }
+
+        public IGenericRepository<Product> ProductRepository
+        {
+            get
+            {
+                if (this.productRepository == null)
+                    this.productRepository = new GenericRepository<Product>(_context);
+                return productRepository;
             }
         }
 

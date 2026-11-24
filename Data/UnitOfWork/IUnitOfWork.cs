@@ -9,7 +9,7 @@ namespace Restaurant.Data.UnitOfWork
         IGenericRepository<Land> LandenRepository { get; }
         IGenericRepository<Reservatie> ReservatieRepository { get; }
         IGenericRepository<Tafel> TafelRepository { get; }
-
+        IGenericRepository<Product> ProductRepository { get; }
         //Custom repositories
         ITafelRepository CustomTafelRepository { get; }
 
