@@ -1,57 +1,34 @@
 /* CSS for Index view */
-.hero-container {
+.home-split {
+    position: relative;
     display: flex;
-    flex: 0 0 auto;
+    min-height: calc(100vh - 0px); /* full viewport */
+    overflow: hidden;
+}
+
+.home-panel {
+    position: relative;
+    flex: 1 1 50%;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    gap: 40px;
 }
 
-.hero-image{
-    height: 30vh;
+/* Diagonal edge: right panel is clipped so the split runs diagonally */
+.home-panel-right {
+    clip-path: polygon(12% 0, 100% 0, 100% 100%, 0% 100%);
+    margin-left: -8%;
 }
 
-.text-background {
-    background: var(--primary-color);
-    padding: 20px 40px;
-    border-radius: 10px;
-    border: 8px double;
+.home-panel-left {
+    z-index: 1;
 }
 
-.home-btn-group {
-    display: flex;
-    justify-content: center;
-    padding: 20px 40px;
-    gap: 20px;
-    font-size: 25px;
+.home-panel-image {
+    width: 70%;
+    max-height: 55vh;
+    object-fit: cover;
+    border-radius: 12px;
 }
-
-::deep .home-btn-login {
-    color: var(--bg-color);
-    background: var(--secundary-color);
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    box-shadow: 4px 4px var(--accent-color);
-}
-    ::deep .home-btn-login:hover {
-        filter: brightness(1.2);
-        scale: 1.1;
-    }
-
-::deep .home-btn-create {
-    color: var(--bg-color);
-    background: var(--secundary-color);
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    box-shadow: 4px 4px var(--accent-color);
-}
-    ::deep .home-btn-create:hover {
-        filter: brightness(1.2);
-        scale: 1.1;
-    }
-
-
-

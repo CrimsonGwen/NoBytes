@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Restaurant.Controllers
+﻿namespace Restaurant.Controllers
 {
     public class AccountController : Controller
     {
@@ -11,13 +8,14 @@ namespace Restaurant.Controllers
         private readonly IUnitOfWork _context;
         private readonly IMapper _mapper;
 
-        public AccountController(ILogger<AccountController> logger,UserManager<CustomUser> userManager, SignInManager<CustomUser> signInManager , IUnitOfWork context, IMapper mapper)
+        public AccountController(ILogger<AccountController> logger, UserManager<CustomUser> userManager, SignInManager<CustomUser> signInManager, IUnitOfWork context, IMapper mapper)
         {
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -25,6 +23,12 @@ namespace Restaurant.Controllers
         {
             var vm = await GetDataAsync();
             return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View(new LogInViewModel());
         }
 
         [HttpPost]
@@ -87,6 +91,54 @@ namespace Restaurant.Controllers
                     Value = l.Id.ToString(),
                     Text = l.Naam
                 })
+            };
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LogInViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email.Trim());
+
+            if (user is null)
+            {
+                ModelState.AddModelError(string.Empty, "Account niet gevonden");
+                ViewBag.ShowRegisterOption = true;
+                return View(model);
+            }
+
+            if (!user.Actief)
+            {
+                ModelState.AddModelError(string.Empty, "Dit account is gedeactiveerd.");
+                return View(model);
+            }
+
+            var passwordValid = await _userManager.CheckPasswordAsync(user, model.Password);
+            if (!passwordValid)
+            {
+                ModelState.AddModelError(string.Empty, "Onjuist wachtwoord");
+                return View(model);
+            }
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var role = roles.FirstOrDefault();
+
+            return role switch
+            {
+                "Eigenaar" => RedirectToAction("Index", "Owner"),
+                "Zaalverantwoordelijke" => RedirectToAction("Index", "Manager"),
+                "Kok" => RedirectToAction("Index", "Cook"),
+                "Ober" => RedirectToAction("Index", "Waiter"),
+                "Klant" => RedirectToAction("Index", "Klant"),
+                _ => RedirectToAction(nameof(Login))
             };
         }
     }

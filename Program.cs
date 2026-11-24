@@ -1,4 +1,6 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Data.SqlClient;
 using Restaurant.Configuration;
 using Restaurant.Services;
 
@@ -14,9 +16,38 @@ builder.Services.Configure<EmailSettings>(
 
 builder.Services.AddScoped<EmailService>();
 
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddDbContext<RestaurantContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDBConnection")));
+//builder.Services.AddDbContext<RestaurantContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDBConnection")));
+builder.Services.AddScoped<RestaurantContext>(provider =>
+{
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    var localDB = configuration.GetConnectionString("LocalDBConnection");
+    var dockerDB = configuration.GetConnectionString("DockerDBConnection");
+
+
+    string activeConnection = localDB;
+
+    try
+    {
+        var connectionBuilder = new SqlConnectionStringBuilder(localDB);
+        connectionBuilder.ConnectTimeout = 3;
+
+        using var connection = new SqlConnection(connectionBuilder.ConnectionString);
+        connection.Open();
+    }
+    catch (Exception)
+    {
+        activeConnection = dockerDB;
+    }
+
+    var optionsBuilder = new DbContextOptionsBuilder<RestaurantContext>();
+    optionsBuilder.UseSqlServer(activeConnection);
+
+    return new RestaurantContext(optionsBuilder.Options);
+});
+
 
 builder.Services.AddIdentity<CustomUser, IdentityRole>(options =>
 {
@@ -25,10 +56,16 @@ builder.Services.AddIdentity<CustomUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<RestaurantContext>()
     .AddDefaultTokenProviders();
 
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//}).AddCookie();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = "/Gebruiker/Login"; // Pad naar de inlogpagina
+    options.LoginPath = "/Account/Login"; // Pad naar de inlogpagina
     options.AccessDeniedPath = "/Home/Index"; // Pad naar de homepagina
 });
 

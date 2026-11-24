@@ -2,9 +2,9 @@
 
 namespace Restaurant.Controllers
 {
-    public class LogInController : Controller
+    public class KlantController : Controller
     {
-        public IActionResult LogIn()
+        public IActionResult Index()
         {
             return View();
         }
