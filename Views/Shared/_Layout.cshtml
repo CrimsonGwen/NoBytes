@@ -15,12 +15,18 @@
     @{
         var isHomescreen = ViewData["IsHomescreen"] as bool? ?? false;
         var isAuthenticated = User?.Identity?.IsAuthenticated ?? false;
+
+        var isOwner = isAuthenticated && User!.IsInRole("Eigenaar");
+        var isManager = isAuthenticated && User!.IsInRole("Zaalverantwoordelijke");
+        var isCook = isAuthenticated && User!.IsInRole("Kok");
+        var isWaiter = isAuthenticated && User!.IsInRole("Ober");
+        var isCustomer = isAuthenticated && User!.IsInRole("Klant");
     }
 
-    @if (isHomescreen)
+@if (isHomescreen)
     {
         <header class="home-minimal-header">
-            <a class="brand-pill" asp-area="" asp-controller="Home" asp-action="Index">
+            <a class="brand-pill brand-pill--home" asp-area="" asp-controller="Home" asp-action="Index">
                 <img src="/Pixelkok met dampende pizza.png" class="nobytes-logo" alt="NoBytes Logo" />
                 <span class="brand-pill-title">NoBytes</span>
             </a>
@@ -29,32 +35,54 @@
     else
     {
         <header class="app-header">
-            <nav class="app-navbar">
-                <!-- Left of logo: Home & Account -->
+            <nav class="nav-capsule" aria-label="Primary navigation">
                 <div class="nav-group-left">
-                    <a class="nav-link-luxury" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    <a class="nav-link-luxury" asp-area="" asp-controller="Account" asp-action="Index">Account</a>
+                    <a class="nav-link-pill" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="nav-link-pill" asp-area="" asp-controller="Account" asp-action="Index">Account</a>
                 </div>
 
-                <!-- Center: Pill Brand Badge -->
-                <a class="brand-pill brand-pill--compact" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="nav-center-brand" asp-area="" asp-controller="Home" asp-action="Index" aria-label="NoBytes Home">
                     <img src="/Pixelkok met dampende pizza.png" class="nobytes-logo" alt="NoBytes Logo" />
-                    <span class="brand-pill-title">NoBytes</span>
                 </a>
 
-                <!-- Right: Full navigation only once logged in -->
                 <div class="nav-group-right">
                     @if (isAuthenticated)
                     {
-                        <a class="nav-link-luxury" asp-controller="Owner" asp-action="Dashboard">Dashboard</a>
-                        <a class="nav-link-luxury" asp-controller="Reservations" asp-action="Index">Reservations</a>
-                        <a class="nav-link-luxury" asp-controller="Users" asp-action="Index">Users</a>
-                        <a class="nav-link-luxury" asp-controller="Emails" asp-action="Index">Emails</a>
-                        <a class="nav-link-luxury" asp-controller="Reports" asp-action="Index">Reports</a>
-                    }
-                    else
-                    {
-                        <a class="nav-link-luxury" asp-controller="LogIn" asp-action="LogIn">Login</a>
+                        @if (isOwner)
+                        {
+                            <a class="nav-link-pill" asp-controller="Owner" asp-action="Dashboard">Dashboard</a>
+                            <a class="nav-link-pill" asp-controller="Reservations" asp-action="Index">Reservations</a>
+                            <a class="nav-link-pill" asp-controller="Users" asp-action="Index">Users</a>
+                            <a class="nav-link-pill" asp-controller="Emails" asp-action="Index">Emails</a>
+                            <a class="nav-link-pill" asp-controller="Reports" asp-action="Index">Reports</a>
+                        }
+                        else if (isManager)
+                        {
+                            <a class="nav-link-pill" asp-controller="Manager" asp-action="Dashboard">Dashboard</a>
+                            <a class="nav-link-pill" asp-controller="Reservations" asp-action="Index">Reservations</a>
+                            <a class="nav-link-pill" asp-controller="Users" asp-action="Index">Users</a>
+                            <a class="nav-link-pill" asp-controller="Reports" asp-action="Index">Reports</a>
+                        }
+                        else if (isCook)
+                        {
+                            <a class="nav-link-pill" asp-controller="Kitchen" asp-action="Orders">Kitchen</a>
+                            <a class="nav-link-pill" asp-controller="Reservations" asp-action="FloorOverview">Covers</a>
+                        }
+                        else if (isWaiter)
+                        {
+                            <a class="nav-link-pill" asp-controller="Reservations" asp-action="Index">Reservations</a>
+                            <a class="nav-link-pill" asp-controller="Kitchen" asp-action="ReadyOrders">Orders</a>
+                        }
+                        else if (isCustomer)
+                        {
+                            <a class="nav-link-pill" asp-controller="Reservations" asp-action="MyReservations">My Reservations</a>
+                            <a class="nav-link-pill" asp-controller="Reservations" asp-action="Create">Book Table</a>
+                        }
+
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline m-0">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="nav-link-pill nav-btn-reset">Logout</button>
+                        </form>
                     }
                 </div>
             </nav>
@@ -67,7 +95,7 @@
 
     @if (!isHomescreen)
     {
-        <footer class="custom-border-top footer">
+        <footer class="footer">
             <div class="container">
                 &copy; 2026 - NoBytes - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>

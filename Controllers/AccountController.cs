@@ -1,4 +1,7 @@
-﻿namespace Restaurant.Controllers
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
+namespace Restaurant.Controllers
 {
     public class AccountController : Controller
     {
@@ -140,6 +143,14 @@
                 "Klant" => RedirectToAction("Index", "Klant"),
                 _ => RedirectToAction(nameof(Login))
             };
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

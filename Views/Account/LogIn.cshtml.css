@@ -4,11 +4,6 @@
     position: relative;
     width: 100%;
     flex: 1 0 auto;
-    background-image: url("/Gemini_Generated_Image_ohctxyohctxyohct.jpeg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    image-rendering: pixelated;
     display: flex;
     flex-direction: column;
     justify-content: center;
