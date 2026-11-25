@@ -97,7 +97,6 @@
                                class="form-control" />
                     </div>
 
-
                     <button type="button"
                             id="generateBtn"
                             class="btn btn-light text-dark btn-generate">
@@ -109,7 +108,6 @@
                             class="btn btn-light text-dark">
                         Toon wachtwoord
                     </button>
-
                 </div>
             </div>
 
@@ -117,18 +115,17 @@
                 <label asp-for="LandId" class="control-label">Land</label>
             </div>
 
-                <div class="form-group">
-                    <select asp-for="LandId" asp-items="Model.Landen" class="form-control">
-                        <option value="">-- Selecteer Land --</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-primary mt-3">Create</button>
+            <div class="form-group">
+                <select asp-for="LandId" asp-items="Model.Landen" class="form-control">
+                    <option value="">-- Selecteer Land --</option>
+                </select>
             </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Create</button>
+
         </div>
     </form>
 </div>
-
 
 @section Scripts {
     <script src="~/js/errorModal.js" asp-append-version="true"></script>
