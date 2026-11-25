@@ -5,7 +5,7 @@
     /* --- Single Source Color Palette --- */
     --color-slate-900: #0f172a; /* Deep luxury navy/slate */
     --color-slate-800: #1e293b; /* Secondary dark surface */
-    --color-cream-100: #F6D8AE; /* Soft luxury off-white */
+    --color-cream-100: #F6D8AE; /* Soft luxury warm cream */
     --color-gold-500: #c5a059; /* Champagne gold primary accent */
     --color-gold-400: #d4af37; /* Bright metallic gold highlight */
     /* --- 3 New Accent Colors for Future Use --- */
@@ -26,14 +26,23 @@
 /* ==========================================
    2. GLOBAL STYLES & TYPOGRAPHY
    ========================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 html, body {
-    height: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    max-width: 100%;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
     font-family: var(--main-font);
     color: var(--text-color);
     background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
 }
 
 h1, h2, h3, h4, h5, h6, .navbar-brand {
@@ -51,95 +60,147 @@ a {
     }
 
 /* ==========================================
-   3. STANDARD LAYOUT (NAVBAR & FOOTER)
+   3. PILL NAVBAR & HEADER (NO BOTTOM BORDER)
    ========================================== */
-.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
+.home-minimal-header {
+    position: fixed;
+    top: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    max-width: calc(100% - 24px);
+}
+
+.app-header {
+    flex: 0 0 auto;
+    background-color: transparent;
+    border: none;
+    border-bottom: none;
+    box-shadow: none;
+    padding: 12px clamp(12px, 3vw, 28px) 6px;
+    width: 100%;
+}
+
+.nav-capsule {
+    max-width: 1360px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 46px;
+    padding: 5px clamp(14px, 2vw, 24px);
+    background-color: var(--primary-color);
+    color: var(--color-cream-100);
+    border-radius: 999px;
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.2);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-group-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: clamp(8px, 1.5vw, 18px);
+    flex-wrap: wrap;
+}
+
+.nav-center-brand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+}
+
+.nav-group-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: clamp(8px, 1.5vw, 18px);
+    flex-wrap: wrap;
+}
+
+.brand-pill--home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--primary-color);
+    color: var(--color-cream-100);
+    padding: 4px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.25);
+}
+
+.brand-pill-title {
+    font-family: var(--heading-font);
+    font-size: clamp(0.95rem, 1.2vw, 1.15rem);
     font-weight: 600;
-    color: var(--primary-color) !important;
+    letter-spacing: 0.5px;
+    color: var(--secundary-color);
 }
 
-.custom-border-top {
-    border-top: 2px solid var(--accent-color);
+.nobytes-logo {
+    height: 64px !important;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    display: block;
 }
 
-.custom-border-bottom {
-    border-bottom: 2px solid var(--accent-color);
+.nav-link-pill {
+    font-size: clamp(0.82rem, 0.95vw, 0.92rem);
+    font-weight: 500;
+    color: var(--color-cream-100);
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
+    .nav-link-pill:hover {
+        color: var(--secundary-color);
+        background-color: rgba(255, 255, 255, 0.08);
+    }
 
-button.accept-policy {
-    font-size: 1rem;
-    line-height: inherit;
+.app-main {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(14px, 2.5vw, 28px) clamp(12px, 3vw, 28px) 24px;
+    width: 100%;
 }
 
 .footer {
+    flex: 0 0 auto;
     width: 100%;
     white-space: nowrap;
     line-height: normal;
     padding: 10px 0;
     text-align: center;
-    background-color: var(--bg-color);
 }
 
-.nobytes-logo {
-    height: 8vh;
-    margin: 0;
-    padding: 0;
-}
-
-.container-fluid {
-    max-height: 50px;
+.text-center.hero,
+.dashboard-shell {
+    flex: 1 1 auto;
+    width: 100%;
 }
 
 /* ==========================================
-   4. LUXURY SPLIT-SCREEN HOMESCREEN
+   4. AUTO-ADJUSTING SPLIT-SCREEN HOMESCREEN
    ========================================== */
 .split-hero-wrapper {
     position: relative;
     display: flex;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
     background-color: var(--primary-color);
 }
 
-/* Floating Brand Header at Top Center */
-.hero-header-overlay {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: rgba(15, 23, 42, 0.85);
-    padding: 10px 25px;
-    border-radius: 50px;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(197, 160, 89, 0.3);
-}
-
-.hero-brand-logo {
-    height: 40px;
-    width: auto;
-}
-
-.hero-brand-title {
-    font-family: var(--heading-font);
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--color-cream-100);
-    margin: 0;
-    letter-spacing: 1px;
-}
-
-/* Split Panes */
 .split-pane {
     position: relative;
     flex: 1;
@@ -147,19 +208,17 @@ button.accept-policy {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    padding-bottom: 10vh;
-    transition: flex 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    padding-bottom: clamp(36px, 9vh, 90px);
+    transition: flex 0.45s cubic-bezier(0.25, 1, 0.5, 1);
     background-size: cover;
     background-position: center;
     overflow: hidden;
 }
 
-    /* Hover Pop-Out Effect */
     .split-pane:hover {
-        flex: 1.6;
+        flex: 1.5;
     }
 
-/* Individual Panel Backgrounds */
 .pane-left {
     background-image: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.7)), url('/hiding-ninja-Rpw5dto_LP4-unsplash.jpg');
     background-color: var(--color-slate-800);
@@ -175,15 +234,14 @@ button.accept-policy {
     z-index: 2;
 }
 
-/* Luxury Interactive Buttons */
 .luxury-btn {
     display: inline-block;
     color: var(--primary-color);
     background: linear-gradient(135deg, var(--color-cream-100) 25%, #cbd5e1 100%);
-    padding: 14px 40px;
+    padding: 12px 34px;
     border-radius: 6px;
     font-family: var(--main-font);
-    font-size: 1.25rem;
+    font-size: clamp(1rem, 1.25vw, 1.2rem);
     font-weight: 500;
     text-decoration: none;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
@@ -199,3 +257,320 @@ button.accept-policy {
         box-shadow: 0 15px 30px rgba(197, 160, 89, 0.4);
         text-decoration: none;
     }
+
+/* ==========================================
+   5. DASHBOARD & RESERVATIONS WORKSPACE
+   ========================================== */
+.dashboard-shell {
+    max-width: 1360px;
+    margin: 0 auto;
+}
+
+.dashboard-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.dashboard-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-bronze);
+    margin: 0 0 4px;
+}
+
+.dashboard-title {
+    margin: 0;
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.luxury-btn--sm {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+}
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.kpi-card {
+    background-color: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    border-top: 3px solid var(--secundary-color);
+    border-radius: 8px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.kpi-label {
+    font-size: 0.85rem;
+    color: var(--color-slate-800);
+    opacity: 0.8;
+}
+
+.kpi-value {
+    font-family: var(--heading-font);
+    font-size: 1.75rem;
+    color: var(--primary-color);
+}
+
+.kpi-meta {
+    font-size: 0.8rem;
+    color: var(--color-bronze);
+}
+
+.dashboard-body {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.dashboard-nav {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.dash-nav-item {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--color-cream-100);
+    text-align: left;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    transition: all 0.2s ease;
+}
+
+    .dash-nav-item small {
+        font-size: 0.75rem;
+        opacity: 0.7;
+        font-weight: 400;
+    }
+
+    .dash-nav-item:hover {
+        background-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .dash-nav-item.is-active {
+        background-color: var(--secundary-color);
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+        .dash-nav-item.is-active small {
+            opacity: 0.9;
+        }
+
+.dashboard-content {
+    background-color: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    border-radius: 10px;
+    padding: 24px;
+}
+
+.dash-panel {
+    display: none;
+}
+
+    .dash-panel.is-visible {
+        display: block;
+    }
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+    .panel-header h2 {
+        margin: 0 0 4px;
+        font-size: 1.45rem;
+        color: var(--primary-color);
+    }
+
+.panel-subtitle,
+.panel-placeholder {
+    margin: 0;
+    color: var(--color-slate-800);
+    opacity: 0.8;
+    font-size: 0.92rem;
+}
+
+.panel-filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.dash-input {
+    border: 1px solid rgba(15, 23, 42, 0.2);
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    background-color: var(--bg-color);
+}
+
+.dash-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .dash-table th,
+    .dash-table td {
+        padding: 14px 12px;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+        vertical-align: middle;
+    }
+
+    .dash-table th {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--color-slate-800);
+        opacity: 0.75;
+    }
+
+.text-muted-soft {
+    font-size: 0.82rem;
+    opacity: 0.7;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.status-confirmed {
+    background-color: rgba(45, 74, 62, 0.14);
+    color: var(--color-emerald);
+}
+
+.status-pending {
+    background-color: rgba(184, 134, 11, 0.16);
+    color: var(--color-bronze);
+}
+
+.status-seated {
+    background-color: rgba(15, 23, 42, 0.12);
+    color: var(--primary-color);
+}
+
+.dash-action-btn {
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--color-cream-100);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 6px;
+}
+
+    .dash-action-btn:hover {
+        background-color: var(--secundary-color);
+        color: var(--primary-color);
+    }
+
+.dash-action-btn--ghost {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid rgba(15, 23, 42, 0.2);
+}
+
+.subcard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.subcard {
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    border-radius: 8px;
+    padding: 18px;
+    background-color: var(--bg-color);
+}
+
+    .subcard h3 {
+        margin: 0 0 8px;
+        font-size: 1.1rem;
+        color: var(--primary-color);
+    }
+
+    .subcard p {
+        margin: 0;
+        font-size: 0.9rem;
+        opacity: 0.85;
+    }
+
+/* ==========================================
+   6. RESPONSIVE BREAKPOINTS
+   ========================================== */
+@media (max-width: 900px) {
+    .dashboard-body {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-capsule {
+        border-radius: 24px;
+        grid-template-columns: 1fr auto;
+    }
+
+    .nav-center-brand {
+        order: -1;
+    }
+
+    .nav-group-left {
+        justify-content: flex-start;
+    }
+
+    .nav-group-right {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+    }
+
+    .split-hero-wrapper {
+        flex-direction: column;
+    }
+
+    .split-pane {
+        height: 50%;
+        align-items: center;
+        padding-bottom: 0;
+    }
+
+        .split-pane:hover {
+            flex: 1.3;
+        }
+}

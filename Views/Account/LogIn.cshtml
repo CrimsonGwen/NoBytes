@@ -1,11 +1,9 @@
 ﻿@model Restaurant.ViewModels.LogInViewModel;
 @{
     ViewData["Title"] = "LogIn";
+    var isAuthenticated = User?.Identity?.IsAuthenticated ?? false;
 }
 
-<dialog>
-
-</dialog>
 
 <div class="text-center hero">
     <div class="text-background">
