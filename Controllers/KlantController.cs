@@ -227,6 +227,8 @@ namespace Restaurant.Controllers
                 user.LockoutEnd = DateTimeOffset.MaxValue;
                 user.AccessFailedCount = 0;
 
+                _userManager.DeleteAsync(user);
+
                 await _db.SaveChangesAsync();
                 await transaction.CommitAsync();
             }
