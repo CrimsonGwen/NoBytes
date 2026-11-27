@@ -1,4 +1,4 @@
-﻿
+﻿using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Restaurant.Data.UnitOfWork
 {
@@ -14,5 +14,6 @@ namespace Restaurant.Data.UnitOfWork
         ITafelRepository CustomTafelRepository { get; }
 
         public Task SaveChangesAsync();
+        public Task<IDbContextTransaction> BeginTransactionAsync();
     }
 }

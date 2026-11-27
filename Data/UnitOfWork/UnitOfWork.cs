@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore.Storage;
+
 namespace Restaurant.Data.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
@@ -8,7 +10,6 @@ namespace Restaurant.Data.UnitOfWork
         private IGenericRepository<Land>? landenRepository;
         private IGenericRepository<Reservatie>? reservatieRepository;
         private IGenericRepository<Tafel>? tafelRepository;
-
         private ITafelRepository customTafelRepository;
 
         public UnitOfWork(RestaurantContext context)
@@ -74,6 +75,11 @@ namespace Restaurant.Data.UnitOfWork
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public Task<IDbContextTransaction> BeginTransactionAsync()
+        {
+            return _context.Database.BeginTransactionAsync();
         }
     }
 }
