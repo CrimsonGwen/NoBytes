@@ -1,9 +1,14 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+@model IEnumerable<Restaurant.Models.Reservatie>
 @{
-   ViewData["Title"] = "Owner Dashboard";
-   var activeSection = ViewData["ActiveSection"] as string ?? "reservations";
+    ViewData["Title"] = "Owner Dashboard";
+    var activeSection = ViewData["ActiveSection"] as string ?? "reservations";
+    var datumFilter = ViewBag.DatumFilter as string ?? "";
+    var statusFilter = ViewBag.StatusFilter as string ?? "";
+    var reservaties = Model ?? Enumerable.Empty<Restaurant.Models.Reservatie>();
 }
 
 <div class="dashboard-shell">
@@ -18,22 +23,36 @@
         </div>
     </div>
 
+    @if (TempData["SuccessMessage"] is string successMsg)
+    {
+        <div class="dash-alert dash-alert--success" role="status">
+            @successMsg
+        </div>
+    }
+
+    @if (TempData["WarningMessage"] is string warningMsg)
+    {
+        <div class="dash-alert dash-alert--warning" role="alert">
+            @warningMsg
+        </div>
+    }
+
     <!-- Summary KPI Row -->
     <section class="kpi-grid" aria-label="Key metrics">
         <article class="kpi-card">
             <span class="kpi-label">Reservations Today</span>
-            <strong class="kpi-value">28</strong>
-            <span class="kpi-meta">4 pending confirmation</span>
+            <strong class="kpi-value">@reservaties.Count(r => r.Datum.HasValue && r.Datum.Value.Date == DateTime.Today)</strong>
+            <span class="kpi-meta">Today's bookings</span>
         </article>
         <article class="kpi-card">
-            <span class="kpi-label">Active Users</span>
-            <strong class="kpi-value">142</strong>
-            <span class="kpi-meta">6 staff roles</span>
+            <span class="kpi-label">Checked In</span>
+            <strong class="kpi-value">@reservaties.Count(r => r.IsAanwezig)</strong>
+            <span class="kpi-meta">Currently present</span>
         </article>
         <article class="kpi-card">
             <span class="kpi-label">Emails (Survey / News)</span>
-            <strong class="kpi-value">19 / 3</strong>
-            <span class="kpi-meta">Sent this week</span>
+            <strong class="kpi-value">-</strong>
+            <span class="kpi-meta">Managed in Emails tab</span>
         </article>
         <article class="kpi-card">
             <span class="kpi-label">Overview Reports</span>
@@ -69,23 +88,24 @@
                         <h2>Manage Reservations</h2>
                         <p class="panel-subtitle">Review incoming bookings, assign seating, and update guest statuses.</p>
                     </div>
-                    <div class="panel-filters">
-                        <input type="date" class="dash-input" aria-label="Filter by date" />
-                        <select class="dash-input" aria-label="Filter by status">
-                            <option value="">All Statuses</option>
-                            <option value="Confirmed">Confirmed</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Seated">Seated</option>
-                            <option value="Cancelled">Cancelled</option>
+                    <form asp-action="Index" method="get" class="panel-filters">
+                        <input type="date" name="datumFilter" value="@datumFilter" class="dash-input" aria-label="Filter by date" />
+                        <select name="statusFilter" class="dash-input" aria-label="Filter by status">
+                            <option value="" selected="@(string.IsNullOrEmpty(statusFilter))">All Statuses</option>
+                            <option value="Aanwezig" selected="@(statusFilter == "Aanwezig")">Checked In (Aanwezig)</option>
+                            <option value="Openstaand" selected="@(statusFilter == "Openstaand")">Not Checked In</option>
+                            <option value="Betaald" selected="@(statusFilter == "Betaald")">Paid (Betaald)</option>
                         </select>
-                    </div>
+                        <button type="submit" class="dash-action-btn">Filter</button>
+                        <a asp-action="Index" class="dash-action-btn dash-action-btn--ghost">Reset</a>
+                    </form>
                 </div>
 
                 <div class="table-responsive">
                     <table class="dash-table">
                         <thead>
                             <tr>
-                                <th>Time</th>
+                                <th>Date &amp; Time Slot</th>
                                 <th>Guest</th>
                                 <th>Guests</th>
                                 <th>Status</th>
@@ -94,38 +114,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>18:30</td>
-                                <td><strong>Sander Peeters</strong><br /><span class="text-muted-soft">sander@example.be</span></td>
-                                <td>4</td>
-                                <td><span class="status-badge status-confirmed">Confirmed</span></td>
-                                <td>Window table if possible</td>
-                                <td class="text-end">
-                                    <button type="button" class="dash-action-btn">Seat</button>
-                                    <button type="button" class="dash-action-btn dash-action-btn--ghost">Edit</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>19:15</td>
-                                <td><strong>Lotte Vermeulen</strong><br /><span class="text-muted-soft">lotte@example.be</span></td>
-                                <td>2</td>
-                                <td><span class="status-badge status-pending">Pending</span></td>
-                                <td>Nut allergy noted</td>
-                                <td class="text-end">
-                                    <button type="button" class="dash-action-btn">Confirm</button>
-                                    <button type="button" class="dash-action-btn dash-action-btn--ghost">Cancel</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>20:00</td>
-                                <td><strong>Bram Jacobs</strong><br /><span class="text-muted-soft">bram@example.be</span></td>
-                                <td>6</td>
-                                <td><span class="status-badge status-seated">Seated</span></td>
-                                <td>Anniversary dinner</td>
-                                <td class="text-end">
-                                    <button type="button" class="dash-action-btn dash-action-btn--ghost">Details</button>
-                                </td>
-                            </tr>
+                            @if (Model != null && Model.Any())
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <strong>@(item.Datum?.ToString("dd-MM-yyyy") ?? "-")</strong><br />
+                                            <span class="text-muted-soft">@(item.Tijdslot?.Naam ?? $"Slot #{item.TijdSlotId}")</span>
+                                        </td>
+                                        <td>
+                                            <strong>@(item.CustomUser?.UserName ?? item.KlantId)</strong><br />
+                                            <span class="text-muted-soft">@(item.CustomUser?.Email ?? "")</span>
+                                        </td>
+                                        <td>@item.AantalPersonen</td>
+                                        <td>
+                                            @if (item.IsAanwezig)
+                                            {
+                                                <span class="status-badge status-seated">Checked In</span>
+                                            }
+                                            else if (item.Betaald)
+                                            {
+                                                <span class="status-badge status-confirmed">Paid</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="status-badge status-pending">Pending</span>
+                                            }
+                                        </td>
+                                        <td>@(string.IsNullOrWhiteSpace(item.Opmerking) ? "-" : item.Opmerking)</td>
+                                        <td class="text-end">
+                                            <a asp-action="EditReservatie" asp-route-id="@item.Id" class="dash-action-btn dash-action-btn--ghost">
+                                                Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center panel-placeholder">No reservations match the current filter.</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

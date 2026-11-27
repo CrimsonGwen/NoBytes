@@ -6,14 +6,12 @@
         private readonly UserManager<CustomUser> _userManager;
         private readonly SignInManager<CustomUser> _signInManager;
         private readonly IUnitOfWork _context;
-        private readonly RestaurantContext _db;
 
-        public KlantController(UserManager<CustomUser> userManager, SignInManager<CustomUser> signInManager, IUnitOfWork context, RestaurantContext db)
+        public KlantController(UserManager<CustomUser> userManager, SignInManager<CustomUser> signInManager, IUnitOfWork context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
-            _db = db;
         }
 
         public IActionResult Index()

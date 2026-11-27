@@ -1,0 +1,121 @@
+﻿@model EditReservationViewModel
+@{
+    ViewData["Title"] = "Edit Reservation";
+}
+
+<div class="dashboard-shell">
+    <div class="dashboard-topbar">
+        <div>
+            <p class="dashboard-eyebrow">Management Suite · Reservations</p>
+            <h1 class="dashboard-title">Edit Reservation #@Model.Id</h1>
+        </div>
+        <div class="dashboard-actions">
+            <a asp-action="Index" class="luxury-btn luxury-btn--sm">Back to Overview</a>
+        </div>
+    </div>
+
+    <section class="dash-panel is-visible">
+        <div class="panel-header">
+            <div>
+                <h2>Reservation Details</h2>
+                <p class="panel-subtitle">
+                    Guest: <strong>@Model.KlantNaam</strong>
+                    @if (!string.IsNullOrWhiteSpace(Model.KlantEmail))
+                    {
+                        <span class="text-muted-soft">(@Model.KlantEmail)</span>
+                    }
+                </p>
+            </div>
+            <div>
+                @if (Model.IsAanwezig)
+                {
+                    <span class="status-badge status-seated">Checked In</span>
+                }
+                else
+                {
+                    <span class="status-badge status-confirmed">Not Checked In</span>
+                }
+            </div>
+        </div>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert-box alert-warning" role="alert">
+                <div asp-validation-summary="ModelOnly"></div>
+                <span asp-validation-for="Datum" class="text-danger"></span>
+                <span asp-validation-for="TijdSlotId" class="text-danger"></span>
+                <span asp-validation-for="AantalPersonen" class="text-danger"></span>
+            </div>
+        }
+
+        @if (Model.AlternatieveTijdsloten.Any())
+        {
+            <div class="subcard" style="margin-bottom: 1.25rem;">
+                <h3>Alternative Available Time Slots</h3>
+                <p class="panel-subtitle">
+                    Available on @Model.Datum?.ToString("dd-MM-yyyy") for @Model.AantalPersonen guests:
+                </p>
+                <ul>
+                    @foreach (var slotNaam in Model.AlternatieveTijdsloten)
+                    {
+                        <li><strong>@slotNaam</strong></li>
+                    }
+                </ul>
+            </div>
+        }
+
+        <form asp-action="EditReservatie" asp-route-id="@Model.Id" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="IsAanwezig" />
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label asp-for="Datum" class="form-label">Date</label>
+                    <input asp-for="Datum" type="date" class="dash-input" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="TijdSlotId" class="form-label">Time Slot</label>
+                    <select asp-for="TijdSlotId" asp-items="Model.TijdSlotOpties" class="dash-input">
+                        <option value="">-- Select time slot --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="AantalPersonen" class="form-label">Guests</label>
+                    <input asp-for="AantalPersonen" type="number" min="1" max="50" class="dash-input" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Opmerking" class="form-label">Notes</label>
+                    <input asp-for="Opmerking" type="text" class="dash-input" />
+                </div>
+            </div>
+
+            <div class="form-checks" style="margin: 1rem 0;">
+                <label>
+                    <input asp-for="Betaald" type="checkbox" />
+                    <span>Paid (Betaald)</span>
+                </label>
+
+                @if (Model.IsAlIngecheckt)
+                {
+                    <label class="text-danger" style="display: block; margin-top: 0.5rem;">
+                        <input asp-for="WaarschuwingBevestigd" type="checkbox" />
+                        <span>I understand this guest is already checked in and confirm the impact on planning/seating.</span>
+                    </label>
+                }
+            </div>
+
+            <div class="dashboard-actions">
+                <button type="submit" class="luxury-btn">Confirm &amp; Save Changes</button>
+                <a asp-action="Index" class="dash-action-btn dash-action-btn--ghost">Cancel</a>
+            </div>
+        </form>
+    </section>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

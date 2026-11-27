@@ -2,38 +2,37 @@
 {
     public class TafelRepository:ITafelRepository
     {
-        private readonly RestaurantContext _context; // Vervang door jouw DbContext
+        private readonly RestaurantContext _context;
 
         public TafelRepository(RestaurantContext context)
         {
             _context = context;
         }
 
-        public async Task<bool> CheckAvailabilityAsync(DateTime date, int tijdSlotId, int persons)
+        public async Task<bool> CheckAvailabilityAsync(DateTime date, int tijdSlotId, int people, int? excludeReservatieId = null)
         {
-            // Voorbeeldlogica: Tel het aantal reeds gereserveerde personen / tafels op die datum + tijdslot
-            // en vergelijk dit met de totale capaciteit van je restaurant.
-            int totalCapacity = await _context.Tafels.CountAsync(); // Of jouw logica
+            int totalCapacity = await _context.Tafels.CountAsync();
 
-            int reservedPersons = await _context.Reservaties
-                .Where(r => r.Datum.Value.Date == date.Date && r.TijdSlotId == tijdSlotId)
+            int reservedPeople = await _context.Reservaties
+                .Where(r => r.Datum.HasValue
+                            && r.Datum.Value.Date == date.Date
+                            && r.TijdSlotId == tijdSlotId
+                            && (!excludeReservatieId.HasValue || r.Id != excludeReservatieId.Value))
                 .SumAsync(r => r.AantalPersonen);
 
-            return (reservedPersons + persons) <= totalCapacity;
+            return (reservedPeople + people) <= totalCapacity;
         }
 
-        public async Task<List<string>> GetAlternativeSlotsAsync(DateTime date, int persons)
+        public async Task<List<string>> GetAlternativeSlotsAsync(DateTime date, int people, int? excludeReservatieId = null)
         {
-            // Voorbeeld: Zoek tijdsloten op dezelfde dag waar nog wel plek is
-            // Dit is een placeholder, pas aan naar jouw Tijdslot entiteit
             var availableSlots = new List<string>();
-
             var allTimeSlots = await _context.Tijdslots.ToListAsync();
+
             foreach (var slot in allTimeSlots)
             {
-                if (await CheckAvailabilityAsync(date, slot.Id, persons))
+                if (await CheckAvailabilityAsync(date, slot.Id, people, excludeReservatieId))
                 {
-                    availableSlots.Add(slot.Naam); // Bijv. "Lunch: 11u30 - 12u30"
+                    availableSlots.Add(slot.Naam);
                 }
             }
 
@@ -45,7 +44,7 @@
                 .Select(t => new SelectListItem
                 {
                     Value = t.Id.ToString(),
-                    Text = t.Naam // Pas aan naar de eigenschap die de naam/tijd van het tijdslot bevat (bijv. "Lunch: 11u30 - 12u30")
+                    Text = t.Naam
                 })
                 .ToListAsync();
         }
